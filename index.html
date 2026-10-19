@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090909" />
+  <meta name="description" content="ALANTIS SPORT: ropa deportiva, equipamiento de entrenamiento y nutrición deportiva. Supera tus límites." />
+  <title>ALANTIS SPORT | Rinde al máximo</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg aria-hidden="true" class="icon-sprite" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1"/><circle cx="19" cy="20" r="1"/><path d="M2 3h2l3 13h13l2-10H5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M1 5h13v12H1zM14 9h5l4 4v4h-9z"/><circle cx="6" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 21 6v6c0 5-4 8-9 10-5-2-9-5-9-10V6zM8 12l3 3 5-6"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m14 2-9 12h7l-2 8 9-12h-7z"/></symbol>
+    <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M2 10v4m3-7v10m3-12v14m8-14v14m3-12v10m3-7v4M8 12h8"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21h18M5 18v-5h4v5M11 18V9h4v9M17 18V4h4v14M4 9l6-5 4 2 6-5"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M21 3c-10 0-18 4-18 12a6 6 0 0 0 6 6c8 0 12-8 12-18ZM3 21c2-6 6-9 12-12"/></symbol>
+    <symbol id="i-credit" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 7 10 7 10-7"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3 6.6 7.2 1-5.2 5.1 1.2 7.3L12 18.4 5.8 22l1.2-7.3-5.2-5.1 7.2-1z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 6 3-6 3z"/></symbol>
+  </svg>
+
+  <div class="announcement">BIENVENIDO A ALANTIS SPORT <span class="announcement-dot">✦</span> SUPERA TUS LÍMITES</div>
+  <header class="site-header" id="inicio">
+    <div class="header-inner container-wide">
+      <button type="button" class="icon-btn mobile-menu" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <a class="brand" href="#inicio" aria-label="ALANTIS SPORT, inicio">
+        <img src="assets/emblema.png" alt="" class="brand-emblem" />
+        <span class="brand-type"><strong>ALANTIS</strong><small><span></span> SPORT <span></span></small></span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a class="nav-link active" href="#inicio">Inicio</a>
+        <a class="nav-link" href="#tienda" data-category="Todos">Tienda</a>
+        <a class="nav-link" href="#tienda" data-category="Ropa deportiva">Ropa deportiva</a>
+        <a class="nav-link" href="#tienda" data-category="Vitaminas">Vitaminas</a>
+        <a class="nav-link" href="#tienda" data-category="Accesorios">Accesorios</a>
+        <a class="nav-link" href="#ofertas">Ofertas</a>
+        <a class="nav-link" href="#contacto">Contacto</a>
+      </nav>
+      <div class="header-actions">
+        <form id="search-form" class="search-form" role="search">
+          <input id="site-search" type="search" name="q" autocomplete="off" placeholder="Buscar productos..." aria-label="Buscar productos" />
+          <button type="submit" aria-label="Buscar"><svg class="icon"><use href="#i-search"/></svg></button>
+        </form>
+        <button type="button" class="icon-btn header-user" id="account-btn" aria-label="Mi cuenta"><svg class="icon"><use href="#i-user"/></svg></button>
+        <button type="button" class="icon-btn cart-trigger" id="cart-open" aria-label="Abrir carrito"><svg class="icon"><use href="#i-cart"/></svg><span id="cart-count" class="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-image" aria-hidden="true"></div>
+      <div class="hero-shine" aria-hidden="true"></div>
+      <div class="container-wide hero-content">
+        <p class="eyebrow hero-eyebrow">MÁS FUERTES CADA DÍA</p>
+        <h1 id="hero-title"><span>RINDE AL</span><strong>MÁXIMO</strong></h1>
+        <p class="hero-description">Todo para tu entrenamiento:<br />ropa, equipamiento y vitaminas.</p>
+        <a class="btn btn-gold hero-cta" href="#tienda">VER PRODUCTOS <svg class="icon"><use href="#i-arrow"/></svg></a>
+        <div class="hero-benefits" aria-label="Beneficios Alantis Sport">
+          <div><svg class="icon"><use href="#i-dumbbell"/></svg><span><b>ENTRENA</b><small>Mejor equipamiento</small></span></div>
+          <div><svg class="icon"><use href="#i-bolt"/></svg><span><b>NUTRE</b><small>Tu rendimiento</small></span></div>
+          <div><svg class="icon"><use href="#i-chart"/></svg><span><b>SUPERA</b><small>Tus límites</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories container-wide" aria-label="Categorías de productos">
+      <article class="category-card category-clothing">
+        <div class="category-photo" aria-hidden="true"></div>
+        <div class="category-content"><h2>ROPA<br />DEPORTIVA</h2><p>Estilo y rendimiento<br />en cada movimiento.</p><a class="btn btn-outline" href="#tienda" data-category="Ropa deportiva">VER COLECCIÓN <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="category-card category-equipment">
+        <div class="category-photo" aria-hidden="true"></div>
+        <div class="category-content"><h2>EQUIPAMIENTO</h2><p>Todo lo que necesitas<br />para entrenar sin límites.</p><a class="btn btn-outline" href="#tienda" data-category="Equipamiento">VER COLECCIÓN <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="category-card category-nutrition">
+        <div class="category-photo" aria-hidden="true"></div>
+        <div class="category-content"><h2>VITAMINAS</h2><p>Potencia tu cuerpo.<br />Alcanza tus objetivos.</p><a class="btn btn-outline" href="#tienda" data-category="Vitaminas">VER COLECCIÓN <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </article>
+    </section>
+
+    <section class="products-section container-wide" id="tienda" aria-labelledby="products-heading">
+      <div class="section-heading"><div><p class="eyebrow eyebrow-small">ESCOGIDOS PARA TU ENTRENAMIENTO</p><h2 id="products-heading">PRODUCTOS <span>DESTACADOS</span></h2></div><a href="#tienda" id="all-products-link" class="text-link">Ver todos los productos <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      <div class="product-controls">
+        <div class="filters" id="category-filters" aria-label="Filtrar productos">
+          <button class="filter-chip selected" type="button" data-filter="Todos" aria-pressed="true">Todos</button>
+          <button class="filter-chip" type="button" data-filter="Ropa deportiva" aria-pressed="false">Ropa</button>
+          <button class="filter-chip" type="button" data-filter="Calzado" aria-pressed="false">Calzado</button>
+          <button class="filter-chip" type="button" data-filter="Equipamiento" aria-pressed="false">Equipamiento</button>
+          <button class="filter-chip" type="button" data-filter="Vitaminas" aria-pressed="false">Vitaminas</button>
+          <button class="filter-chip" type="button" data-filter="Accesorios" aria-pressed="false">Accesorios</button>
+        </div>
+        <label class="sort-label">Ordenar <select id="sort-select" aria-label="Ordenar productos"><option value="featured">Destacados</option><option value="asc">Menor precio</option><option value="desc">Mayor precio</option><option value="name">Nombre A-Z</option></select></label>
+      </div>
+      <p class="results-indicator" id="results-indicator" aria-live="polite"></p>
+      <div id="product-grid" class="product-grid"></div>
+      <div id="no-results" class="no-results" hidden><svg class="icon"><use href="#i-search"/></svg><h3>No encontramos productos</h3><p>Prueba otra búsqueda o vuelve a ver todo el catálogo.</p><button class="btn btn-gold" id="reset-filters" type="button">VER TODOS</button></div>
+    </section>
+
+    <section class="benefits container-wide" aria-label="Razones para elegirnos">
+      <div class="benefit"><svg class="icon"><use href="#i-truck"/></svg><span><strong>ENVÍO A DOMICILIO</strong><small>Condiciones por configurar</small></span></div>
+      <div class="benefit"><svg class="icon"><use href="#i-shield"/></svg><span><strong>CALIDAD PREMIUM</strong><small>Selección deportiva</small></span></div>
+      <div class="benefit"><svg class="icon"><use href="#i-leaf"/></svg><span><strong>NUTRICIÓN DEPORTIVA</strong><small>Tu mejor versión</small></span></div>
+      <div class="benefit"><svg class="icon"><use href="#i-credit"/></svg><span><strong>COMPRA ONLINE</strong><small>Pagos pendientes de activar</small></span></div>
+    </section>
+
+    <section class="offers" id="ofertas" aria-labelledby="offers-title"><div class="offers-image" aria-hidden="true"></div><div class="container-wide offers-content"><p class="eyebrow">SOLO EN ALANTIS SPORT</p><h2 id="offers-title">OFERTAS <span>ESPECIALES</span></h2><p>LAS MEJORES COLECCIONES, AL MEJOR ESTILO</p><a href="#tienda" class="btn btn-gold" id="offers-button">EXPLORAR PRODUCTOS <svg class="icon"><use href="#i-arrow"/></svg></a></div></section>
+
+    <section class="newsletter" aria-labelledby="newsletter-title"><div class="container-wide newsletter-inner"><div><h2 id="newsletter-title">ÚNETE A LA COMUNIDAD ALANTIS</h2><p>Recibe novedades, lanzamientos y contenido de entrenamiento.</p></div><form id="newsletter-form" class="newsletter-form"><label class="sr-only" for="newsletter-email">Tu correo electrónico</label><svg class="icon"><use href="#i-mail"/></svg><input type="email" id="newsletter-email" placeholder="Tu correo electrónico" autocomplete="email" required /><button type="submit" class="btn btn-gold">SUSCRIBIRME <svg class="icon"><use href="#i-arrow"/></svg></button></form></div></section>
+  </main>
+
+  <footer class="site-footer" id="contacto"><div class="container-wide footer-main"><div class="footer-brand"><img src="assets/logo-completo.webp" alt="ALANTIS SPORT, logo" width="196" height="196"/><p>MÁS QUE UN DEPORTE.<br/>UN ESTILO DE VIDA.</p></div><div class="footer-col"><h3>TIENDA</h3><a href="#tienda" data-category="Todos">Todos los productos</a><a href="#tienda" data-category="Ropa deportiva">Ropa deportiva</a><a href="#tienda" data-category="Equipamiento">Equipamiento</a><a href="#tienda" data-category="Vitaminas">Vitaminas</a><a href="#tienda" data-category="Accesorios">Accesorios</a><a href="#ofertas">Ofertas</a></div><div class="footer-col"><h3>INFORMACIÓN</h3><button type="button" data-info="nosotros">Sobre nosotros</button><button type="button" data-info="envios">Envíos y devoluciones</button><button type="button" data-info="tallas">Guía de tallas</button><button type="button" data-info="preguntas">Preguntas frecuentes</button><button type="button" data-info="legal">Términos y condiciones</button><button type="button" data-info="privacidad">Política de privacidad</button></div><div class="footer-col"><h3>CONTACTO</h3><p>Atención al cliente: datos de contacto pendientes de añadir.</p><button type="button" data-info="contacto">Solicitar información</button></div><div class="footer-col social-col"><h3>SÍGUENOS</h3><div class="social-icons"><button type="button" aria-label="Instagram (pendiente de enlazar)" data-info="redes"><svg class="icon"><use href="#i-instagram"/></svg></button><button type="button" aria-label="YouTube (pendiente de enlazar)" data-info="redes"><svg class="icon"><use href="#i-youtube"/></svg></button><button type="button" aria-label="TikTok (pendiente de enlazar)" data-info="redes"><span class="social-text">♪</span></button></div><p>Disciplina. Constancia. Resultados.</p></div></div><div class="footer-bottom container-wide"><p>© <span id="current-year"></span> ALANTIS SPORT. Todos los derechos reservados. <span class="demo-label">TIENDA DE DEMOSTRACIÓN</span></p><div class="payment-names" aria-label="Integraciones de pago por configurar"><span>VISA</span><span>mastercard</span><span>PayPal</span><small>Pagos por conectar</small></div></div></footer>
+
+  <div id="screen-overlay" class="screen-overlay" hidden></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Carrito de compra" aria-modal="true" role="dialog" aria-hidden="true" tabindex="-1"><div class="cart-head"><div><p class="eyebrow eyebrow-small">TU SELECCIÓN</p><h2>MI CARRITO <span id="cart-title-count">(0)</span></h2></div><button id="cart-close" class="icon-btn" type="button" aria-label="Cerrar carrito"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="cart-items" class="cart-items"></div><div class="cart-summary"><div class="promo-field"><label for="promo-code">¿TIENES UN CÓDIGO?</label><div><input id="promo-code" type="text" placeholder="Código promocional" autocomplete="off"/><button type="button" id="apply-promo">APLICAR</button></div><p id="promo-message" role="status"></p></div><div class="cart-summary-row"><span>Subtotal</span><b id="cart-subtotal">0,00 €</b></div><div class="cart-summary-row" id="discount-row" hidden><span>Descuento (demo)</span><b id="cart-discount">−0,00 €</b></div><div class="cart-summary-row"><span>Envío estimado*</span><b id="cart-shipping">0,00 €</b></div><div class="cart-summary-row cart-total"><strong>TOTAL</strong><strong id="cart-total">0,00 €</strong></div><p class="shipping-note">*Envío ilustrativo. Los importes definitivos se configurarán antes de publicar la tienda.</p><button type="button" id="checkout-btn" class="btn btn-gold checkout-btn">FINALIZAR PEDIDO (DEMO) <svg class="icon"><use href="#i-arrow"/></svg></button><button type="button" id="continue-shopping" class="continue-btn">SEGUIR COMPRANDO</button></div></aside>
+
+  <div id="info-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" tabindex="-1"><button class="modal-close icon-btn" id="modal-close" aria-label="Cerrar ventana"><svg class="icon"><use href="#i-close"/></svg></button><div class="modal-medallion"><img src="assets/emblema.png" alt=""/></div><p class="eyebrow">ALANTIS SPORT</p><h2 id="modal-title"></h2><p id="modal-description"></p><button type="button" class="btn btn-gold" id="modal-ok">ENTENDIDO</button></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
