@@ -1,0 +1,40 @@
+# ALANTIS SPORT - backend privado para pedidos / eventos Shopify.
+# Este archivo contiene SOLO configuración pública, NUNCA secretos.
+# ATENCIÓN: el plan con disco es DE PAGO. Revisa el coste antes de aceptar en Render.
+previews:
+  generation: off
+services:
+  - type: web
+    name: alantis-sport-api
+    runtime: docker
+    region: frankfurt
+    plan: 0.5c-512mb
+    branch: main
+    repo: https://github.com/Byl0ke/alantis-sport
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - backend/**
+        - render.yaml
+    envVars:
+      - key: ALANTIS_SQL_KEY_B64
+        sync: false
+      - key: ALANTIS_ADMIN_TOKEN
+        sync: false
+      - key: ALANTIS_SHOPIFY_WEBHOOK_SECRET
+        sync: false
+      - key: ALANTIS_ALLOWED_SHOP
+        value: psm7b6-qs.myshopify.com
+      - key: ALANTIS_ALLOWED_ORIGIN
+        value: https://byl0ke.github.io
+      - key: ALANTIS_DATA_DIR
+        value: /data
+      - key: ALANTIS_PORT
+        value: '8080'
+    disk:
+      name: alantis-orders-encrypted
+      mountPath: /data
+      sizeGB: 1
