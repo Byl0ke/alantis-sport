@@ -69,3 +69,25 @@ button.side-link:hover{background:#252018}
 @media(max-width:600px){.admin-gate{padding:28px 16px}.gate-brand{gap:10px}.gate-brand h1{font-size:clamp(29px,8vw,35px);letter-spacing:.5px}.gate-brand p{letter-spacing:1px;line-height:1.5}.gate-brand img{flex:0 0 59px;width:59px;height:59px}.gate-card{padding:22px}.pin-entry input{letter-spacing:8px;padding:14px 8px}.pin-entry button{padding:0 9px}.admin-unlocked{overflow-x:clip}}
 
 html{overflow-x:clip}body{overflow-x:clip}
+
+/* Archivo privado: consultas en el panel unificado */
+.sql-panel{margin-bottom:28px}
+.sql-badge{border:1px solid #9b7b3e;color:#f1ca7d;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:1px;padding:8px 12px}
+.sql-connect-grid{margin:20px 0 12px}
+.sql-actions{flex-wrap:wrap}
+.sql-status{font-size:13px;line-height:1.5;border:1px solid #524327;background:#19150d;border-radius:8px;padding:13px;margin:18px 0;color:#e5c78b}
+.sql-status.error{border-color:#9b473d;background:#2a1414;color:#ffbab0}
+.sql-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:22px 0}
+.sql-stats>div{border:1px solid #3e3527;border-radius:9px;background:#141311;padding:18px;min-width:0}
+.sql-stats span{display:block;color:#bcb2a0;font-size:11px;margin-bottom:8px}
+.sql-stats strong{font-size:26px;color:#eac679}
+.sql-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:24px 0 10px}
+.sql-head h3{margin:0;font:800 22px Barlow Condensed,Arial,sans-serif;text-transform:uppercase}
+.sql-head small{color:#aaa}
+.sql-table-wrap{border-radius:9px;overflow:auto;border:1px solid #40362a;max-height:400px}
+.sql-table{width:100%;min-width:620px;border-collapse:collapse;font-size:12px}
+.sql-table th,.sql-table td{text-align:left;border-bottom:1px solid #38322a;padding:12px 14px;white-space:nowrap}
+.sql-table th{color:#eac679;background:#151311;position:sticky;top:0}
+.sql-table td{color:#e4dfd6}
+.sql-empty{color:#a8a096;margin:0;padding:18px;font-size:13px}
+@media(max-width:640px){.sql-stats{grid-template-columns:1fr}.sql-head{align-items:start;flex-direction:column}.sql-actions .btn{width:100%}}

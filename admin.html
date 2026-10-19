@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#080808" />
   <meta name="robots" content="noindex, nofollow" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: blob: data:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: blob: data:; connect-src 'self' https://api.github.com https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>ALANTIS SPORT | Centro de administración</title>
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="admin.css" />
   <script src="admin-auth.js" defer></script>
   <script src="admin.js" defer></script>
+  <script src="admin-sql.js" defer></script>
 </head>
 <body>
   <!-- Barrera visual del editor: en GitHub Pages NO equivale a una autenticación privada. -->
@@ -56,6 +57,7 @@
       <a class="side-link" href="#descuentos">% <span>Ofertas y cupones</span></a>
       <a class="side-link" href="#configuracion">⚙ <span>Configuración</span></a>
       <a class="side-link" href="#shopify-panel">◫ <span>Ventas Shopify</span></a>
+      <a class="side-link" href="#sql-cifrado">▣ <span>Pedidos y SQL cifrado</span></a>
       <a class="side-link" href="./" target="_blank" rel="noopener noreferrer">↗ <span>Ver tienda pública</span></a>
       <button class="side-link logout-link" id="logout-side" type="button">⌁ <span>Bloquear panel</span></button>
       <a class="side-link" href="https://github.com/Byl0ke/alantis-sport" target="_blank" rel="noopener noreferrer">⌘ <span>Repositorio GitHub</span></a>
@@ -74,7 +76,8 @@
         <a href="#descuentos"><span>03 / MARKETING</span><strong>Ofertas</strong><small>Cupones, rebajas y banners</small><b aria-hidden="true">↗</b></a>
         <a href="#configuracion"><span>04 / AJUSTES</span><strong>Configuración</strong><small>Envíos y copias de seguridad</small><b aria-hidden="true">↗</b></a>
         <a href="#shopify-panel"><span>05 / VENTAS</span><strong>Shopify</strong><small>Pagos, pedidos y clientes</small><b aria-hidden="true">↗</b></a>
-        <a href="#publish-heading"><span>06 / GUARDAR</span><strong>GitHub</strong><small>Publicar los cambios</small><b aria-hidden="true">↗</b></a>
+        <a href="#sql-cifrado"><span>06 / ARCHIVO</span><strong>Pedidos y registros</strong><small>SQL cifrado · Backups privados</small><b aria-hidden="true">↗</b></a>
+        <a href="#publish-heading"><span>07 / GUARDAR</span><strong>GitHub</strong><small>Publicar los cambios</small><b aria-hidden="true">↗</b></a>
       </nav>
       <section class="summary-grid" aria-label="Resumen del catálogo">
         <div class="stat"><span>PRODUCTOS</span><strong id="stat-total">—</strong><small>En tu catálogo</small></div>
@@ -165,6 +168,23 @@
           <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/settings/payments">Configurar cobros ↗</a>
         </div>
       </section>
+
+      <div class="section-heading" id="sql-cifrado"><div><span class="eyebrow">SEGURIDAD Y TRAZABILIDAD</span><h2>PEDIDOS Y REGISTROS · SQL CIFRADO</h2></div><p>Consulta datos reales desde tu servidor privado, sin guardarlos en GitHub Pages.</p></div>
+      <section class="sql-panel editor-panel" aria-labelledby="sql-heading">
+        <div class="panel-heading"><div><span class="eyebrow">ALANTIS · ARCHIVO ENCRIPTADO</span><h2 id="sql-heading">pedidos.sql.enc</h2></div><span class="sql-badge">AES-256-GCM</span></div>
+        <p class="hint-block">Este panel está preparado, pero necesita desplegar el servidor <code>backend/</code>, una carpeta de datos persistente, una clave secreta y los webhooks de Shopify. <strong>El PIN visual no protege los datos.</strong> Para consultarlos se exige un token privado independiente. No pegues la clave de cifrado aquí.</p>
+        <div class="form-grid sql-connect-grid">
+          <label class="field">URL del servidor privado (HTTPS)<input id="sql-api-url" type="url" inputmode="url" autocomplete="off" placeholder="https://tu-servidor.example.com" /></label>
+          <label class="field">Token administrativo del servidor<input id="sql-api-token" type="password" autocomplete="off" spellcheck="false" placeholder="Token largo generado en tu hosting" /></label>
+        </div>
+        <div class="form-actions sql-actions"><button type="button" class="btn btn-gold" id="sql-connect">Conectar registros</button><button type="button" class="btn btn-light" id="sql-refresh">Actualizar datos</button><button type="button" class="btn btn-light" id="sql-backup">Descargar .sql.enc</button><button type="button" class="btn btn-dark" id="sql-disconnect">Desconectar</button></div>
+        <p id="sql-status" class="sql-status" role="status" aria-live="polite">Sin servidor privado conectado. Los registros reales todavía no se están almacenando aquí.</p>
+        <div class="sql-stats"><div><span>Pedidos guardados</span><strong id="sql-orders-count">—</strong></div><div><span>Notificaciones recibidas</span><strong id="sql-webhooks-count">—</strong></div><div><span>Eventos registrados</span><strong id="sql-audit-count">—</strong></div></div>
+        <div class="sql-head"><h3>Pedidos reales</h3><small>Últimos 50 · consulta autorizada</small></div><div class="sql-table-wrap" id="sql-orders-table"><p class="sql-empty">Conecta un servidor para consultar los pedidos.</p></div>
+        <div class="sql-head"><h3>Registro de eventos</h3><small>Últimos 100 · notificaciones de Shopify y publicaciones autorizadas</small></div><div class="sql-table-wrap" id="sql-logs-table"><p class="sql-empty">Los eventos aparecerán cuando conectes el servidor.</p></div>
+        <p class="hint-block">Shopify es la fuente de verdad. Este archivo guarda notificaciones nuevas una vez que se configuren; <strong>no importa pedidos anteriores automáticamente</strong>. No almacenes datos personales ni claves en un repositorio público.</p>
+      </section>
+
       <section class="publish-panel" aria-labelledby="publish-heading"><div class="publish-head"><span class="eyebrow">SINCRONIZACIÓN SEGURA</span><h2 id="publish-heading">Publicar cambios en <em>GitHub</em></h2><p>Los cambios no se ven en la tienda hasta publicar <code>products.json</code> y <code>store-config.json</code>. No pegues la clave en el código: introdúcela aquí solo cuando vayas a publicar.</p></div><div class="connect-grid"><label class="field">Token temporal de GitHub <input id="github-token" type="password" spellcheck="false" autocomplete="new-password" placeholder="github_pat_..." aria-describedby="token-explain" /></label><button id="check-github" class="btn btn-light" type="button">Comprobar acceso</button></div><p id="token-explain" class="hint">Crea un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Fine-grained personal access token</a> limitado a <b>Byl0ke/alantis-sport</b>, con permiso <b>Contents: Read and write</b>. La clave se guarda solo en la memoria de esta pestaña; no se almacena ni se incluye en los archivos. Cierra la pestaña para descartarla.</p><div class="publish-foot"><div class="status" id="status" role="status" aria-live="polite">Listo para editar el catálogo.</div><button class="btn btn-gold" id="publish-bottom" type="button">↑ Publicar todos los cambios</button></div></section>
 
       <footer class="bottom-copy">© <span id="year"></span> ALANTIS SPORT · Editor estático para GitHub Pages · <a href="./">Volver a la tienda</a></footer>

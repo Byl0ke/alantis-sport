@@ -96,3 +96,9 @@ Más información oficial: https://help.shopify.com/es/manual/checkout-settings/
 - Todas las opciones están en la **misma página**: resumen, productos, inventario, cupones, banners, envíos, integración Shopify, copias de seguridad y publicación en GitHub.
 - **Advertencia de seguridad**: el PIN del navegador NO protege los archivos del servidor, ni el catálogo, ni el código público. En GitHub Pages no existe autenticación privada ni backend; el hash del PIN también está publicado y un atacante puede saltar esta comprobación. No almacenar secretos ni datos personales en esos archivos.
 - Para modificar o publicar el repositorio es obligatorio disponer de credenciales de GitHub con permisos. Para acceso privado real, implementar un servidor con autenticación y sesiones o utilizar el panel de Shopify, cuyo inicio de sesión ya está protegido.
+
+## Pedidos y registros cifrados · nueva integración (pendiente de activar)
+
+Se ha añadido una sección en `admin.html` para conectar un **servidor privado** y consultar pedidos, registros de eventos y descargar un `pedidos.sql.enc` cifrado. El código de backend se encuentra en `backend/`, implementa AES-256-GCM sobre exportación SQL SQLite, verifica los webhooks de Shopify con HMAC y exige token administrativo separado del PIN visual.
+
+**Estado:** los archivos están preparados, pero el servidor **no se ha desplegado** y los webhooks **no se han conectado**. GitHub Pages no guarda pedidos: no afirmar que ya se están archivando pedidos reales. Para instrucciones de despliegue, secretos y copias consulta [GUIA-REGISTROS-SQL.md](GUIA-REGISTROS-SQL.md).

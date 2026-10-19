@@ -50,3 +50,6 @@ La sección **Shopify · Centro comercial** del panel de administración enlaza 
 - Todas las opciones están en la **misma página**: resumen, productos, inventario, cupones, banners, envíos, integración Shopify, copias de seguridad y publicación en GitHub.
 - **Advertencia de seguridad**: el PIN del navegador NO protege los archivos del servidor, ni el catálogo, ni el código público. En GitHub Pages no existe autenticación privada ni backend; el hash del PIN también está publicado y un atacante puede saltar esta comprobación. No almacenar secretos ni datos personales en esos archivos.
 - Para modificar o publicar el repositorio es obligatorio disponer de credenciales de GitHub con permisos. Para acceso privado real, implementar un servidor con autenticación y sesiones o utilizar el panel de Shopify, cuyo inicio de sesión ya está protegido.
+
+## Pedidos y registros cifrados
+El backend `backend/` se sube como **código fuente**, pero GitHub Pages no lo ejecuta. Para guardar pedidos reales debes desplegar un servidor privado y webhooks de Shopify. Consulta `GUIA-REGISTROS-SQL.md`. Nunca subas archivos `.sql.enc`, claves o `.env` al repositorio público.

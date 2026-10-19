@@ -1,0 +1,16 @@
+# Nunca subir datos reales ni secretos al repositorio publico
+.env
+.env.*
+!.env.example
+*.sql
+*.sql.enc
+*.sql.enc.tmp
+*.sqlite
+*.sqlite3
+*.db
+*.db-*
+/data/
+/backend/data/
+__pycache__/
+.pytest_cache/
+*.py[cod]
