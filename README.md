@@ -115,3 +115,10 @@ Se incorpora un backend MySQL privado en `backend/mysql/` que permite replicar p
 Sigue **[GUIA-MYSQL.md](./GUIA-MYSQL.md)** para crear el VPS, configurar HTTPS, las claves secretas y los webhooks. No se guarda ninguna contraseña en GitHub. La API es el único intermediario autorizado entre GitHub Pages y la base de datos.
 
 El backend antiguo SQLite permanece sin cambios en `backend/main.py` y su configuración histórica `render.yaml` también, para no romper la versión anterior.
+
+
+## Portada premium v3 (octubre 2026)
+
+La home incorpora guía por objetivos, selección dinámica desde `products.json`, área automática de ofertas (solo se muestra un artículo cuando `oldPrice > price`), historia de la marca, proceso de compra, comunidad y preguntas frecuentes con `<details>`. Funciona con `premium-home.css` y `premium-home.js` sin modificar el panel de administración ni activar pagos reales.
+
+Todos los productos, reseñas y precios de demostración **no son transacciones ni reseñas verificadas**. El formulario newsletter no registra correos. La zona de ofertas no inventa descuentos: si no hay productos rebajados desde el panel muestra estado próximamente. No hay soporte real de WhatsApp o email hasta proporcionar sus datos oficiales. Las modificaciones se publican con GitHub Pages a través de GitHub, no se sincronizan automáticamente desde el navegador sin autorización.

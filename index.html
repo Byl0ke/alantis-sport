@@ -4,14 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#090909" />
-  <meta name="description" content="ALANTIS SPORT: ropa deportiva, equipamiento de entrenamiento y nutrición deportiva. Supera tus límites." />
+  <meta name="description" content="ALANTIS SPORT: descubre nuestra propuesta de ropa deportiva, equipamiento y nutrición. Entrena con actitud. Catálogo en preparación." />
+  <meta property="og:title" content="ALANTIS SPORT | Elige tu próximo nivel" />
+  <meta property="og:description" content="Ropa, equipamiento y nutrición deportiva con una identidad premium negra y dorada." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://byl0ke.github.io/alantis-sport/assets/hero.webp" />
   <title>ALANTIS SPORT | Rinde al máximo</title>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="premium-home.css" />
   <script src="app.js" defer></script>
+  <script src="premium-home.js" defer></script>
 </head>
 <body>
   <svg aria-hidden="true" class="icon-sprite" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +41,7 @@
     <symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 6 3-6 3z"/></symbol>
   </svg>
 
-  <div class="announcement">BIENVENIDO A ALANTIS SPORT <span class="announcement-dot">✦</span> SUPERA TUS LÍMITES</div>
+  <div class="announcement"><span>ALANTIS SPORT</span><span class="announcement-dot">✦</span><span>PREPARANDO UNA NUEVA ERA DEL ENTRENAMIENTO</span><span class="announcement-dot">✦</span><span>SUPERA TUS LÍMITES</span></div>
   <header class="site-header" id="inicio">
     <div class="header-inner container-wide">
       <button type="button" class="icon-btn mobile-menu" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav"><svg class="icon"><use href="#i-menu"/></svg></button>
@@ -46,11 +52,11 @@
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
         <a class="nav-link active" href="#inicio">Inicio</a>
         <a class="nav-link" href="#tienda" data-category="Todos">Tienda</a>
-        <a class="nav-link" href="#tienda" data-category="Ropa deportiva">Ropa deportiva</a>
-        <a class="nav-link" href="#tienda" data-category="Vitaminas">Vitaminas</a>
-        <a class="nav-link" href="#tienda" data-category="Accesorios">Accesorios</a>
+        <a class="nav-link" href="#colecciones">Colecciones</a>
+        <a class="nav-link" href="#universo">Nuestra marca</a>
+        <a class="nav-link" href="#guia">Guía</a>
         <a class="nav-link" href="#ofertas">Ofertas</a>
-        <a class="nav-link" href="#contacto">Contacto</a>
+        <a class="nav-link" href="#preguntas">Ayuda</a>
       </nav>
       <div class="header-actions">
         <form id="search-form" class="search-form" role="search">
@@ -68,9 +74,9 @@
       <div class="hero-image" aria-hidden="true"></div>
       <div class="hero-shine" aria-hidden="true"></div>
       <div class="container-wide hero-content">
-        <p class="eyebrow hero-eyebrow">MÁS FUERTES CADA DÍA</p>
+        <p class="eyebrow hero-eyebrow"><span class="gold-dot"></span> DEPORTE · DISCIPLINA · ACTITUD</p>
         <h1 id="hero-title"><span>RINDE AL</span><strong>MÁXIMO</strong></h1>
-        <p class="hero-description">Todo para tu entrenamiento:<br />ropa, equipamiento y vitaminas.</p>
+        <p class="hero-description">Tu entrenamiento merece una identidad propia. Descubre ropa, equipamiento y nutrición con el carácter de ALANTIS.</p>
         <a class="btn btn-gold hero-cta" href="#tienda">VER PRODUCTOS <svg class="icon"><use href="#i-arrow"/></svg></a>
         <div class="hero-benefits" aria-label="Beneficios Alantis Sport">
           <div><svg class="icon"><use href="#i-dumbbell"/></svg><span><b>ENTRENA</b><small>Mejor equipamiento</small></span></div>
@@ -78,9 +84,10 @@
           <div><svg class="icon"><use href="#i-chart"/></svg><span><b>SUPERA</b><small>Tus límites</small></span></div>
         </div>
       </div>
+      <div class="hero-index" aria-hidden="true">01 / ALANTIS SPORT</div>
     </section>
 
-    <section class="categories container-wide" aria-label="Categorías de productos">
+    <section class="categories container-wide" id="colecciones" aria-label="Categorías de productos">
       <article class="category-card category-clothing">
         <div class="category-photo" aria-hidden="true"></div>
         <div class="category-content"><h2>ROPA<br />DEPORTIVA</h2><p>Estilo y rendimiento<br />en cada movimiento.</p><a class="btn btn-outline" href="#tienda" data-category="Ropa deportiva">VER COLECCIÓN <svg class="icon"><use href="#i-arrow"/></svg></a></div>
@@ -95,8 +102,21 @@
       </article>
     </section>
 
+
+    <section class="goal-section container-wide premium-reveal" aria-labelledby="goal-title">
+      <div class="premium-heading">
+        <div><p class="premium-kicker">ENCUENTRA TU ENFOQUE <span> / 01</span></p><h2 id="goal-title">CADA OBJETIVO.<br/><em>UNA ACTITUD.</em></h2></div>
+        <p>No existe una sola forma de superarse. Prepara cada sesión con una selección pensada para tu rutina.</p>
+      </div>
+      <div class="goal-grid">
+        <a class="goal-tile goal-strength" href="#tienda" data-category="Equipamiento"><span class="goal-no">01 / FUERZA</span><span class="goal-copy"><strong>ELEVA<br/>TU NIVEL</strong><small>Explora equipamiento <span aria-hidden="true">↗</span></small></span></a>
+        <a class="goal-tile goal-motion" href="#tienda" data-category="Ropa deportiva"><span class="goal-no">02 / MOVIMIENTO</span><span class="goal-copy"><strong>MUÉVETE<br/>SIN LÍMITES</strong><small>Explora ropa deportiva <span aria-hidden="true">↗</span></small></span></a>
+        <a class="goal-tile goal-nutrition" href="#tienda" data-category="Vitaminas"><span class="goal-no">03 / NUTRICIÓN</span><span class="goal-copy"><strong>CUIDA<br/>TU RUTINA</strong><small>Explora nutrición <span aria-hidden="true">↗</span></small></span></a>
+      </div>
+    </section>
+
     <section class="products-section container-wide" id="tienda" aria-labelledby="products-heading">
-      <div class="section-heading"><div><p class="eyebrow eyebrow-small">ESCOGIDOS PARA TU ENTRENAMIENTO</p><h2 id="products-heading">PRODUCTOS <span>DESTACADOS</span></h2></div><a href="#tienda" id="all-products-link" class="text-link">Ver todos los productos <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      <div class="section-heading"><div><p class="eyebrow eyebrow-small">CATÁLOGO EN PREPARACIÓN · PRECIOS ILUSTRATIVOS</p><h2 id="products-heading">PRODUCTOS <span>DESTACADOS</span></h2></div><a href="#tienda" id="all-products-link" class="text-link">Ver todos los productos <svg class="icon"><use href="#i-arrow"/></svg></a></div>
       <div class="product-controls">
         <div class="filters" id="category-filters" aria-label="Filtrar productos">
           <button class="filter-chip selected" type="button" data-filter="Todos" aria-pressed="true">Todos</button>
@@ -113,6 +133,18 @@
       <div id="no-results" class="no-results" hidden><svg class="icon"><use href="#i-search"/></svg><h3>No encontramos productos</h3><p>Prueba otra búsqueda o vuelve a ver todo el catálogo.</p><button class="btn btn-gold" id="reset-filters" type="button">VER TODOS</button></div>
     </section>
 
+
+    <section class="editorial-picks container-wide premium-reveal" aria-labelledby="editor-picks-title">
+      <div class="premium-heading premium-heading-compact"><div><p class="premium-kicker">LA SELECCIÓN ALANTIS <span> / 02</span></p><h2 id="editor-picks-title">NUESTROS <em>ESENCIALES.</em></h2></div><p>Una vista previa de artículos del catálogo. Podrás actualizarla desde el administrador.</p></div>
+      <div class="picks-grid" id="editor-picks" aria-live="polite"><p class="premium-loading">Preparando la selección…</p></div>
+      <p class="preview-disclaimer">Vista previa: los artículos, precios y existencias mostrados pueden ser datos de ejemplo. Las compras reales todavía no están habilitadas.</p>
+    </section>
+
+    <section class="brand-story container-wide premium-reveal" id="universo" aria-labelledby="brand-title">
+      <div class="brand-story-media"><div class="brand-media-mark"><img src="assets/emblema.png" alt="" loading="lazy"/></div><span class="brand-media-caption">ALANTIS / BUILT FOR YOUR JOURNEY</span></div>
+      <div class="brand-story-copy"><p class="premium-kicker">NUESTRO UNIVERSO <span> / 03</span></p><h2 id="brand-title">NO ES SOLO<br/>ENTRENAR.<br/><em>ES SUPERARTE.</em></h2><p>ALANTIS SPORT nace con una idea clara: que cada paso en tu entrenamiento tenga propósito. Una estética fuerte, una mentalidad constante y equipamiento para acompañarte.</p><div class="brand-values"><span><b>01</b> Disciplina</span><span><b>02</b> Constancia</span><span><b>03</b> Evolución</span></div><a class="premium-text-link" href="#colecciones">DESCUBRE EL UNIVERSO ALANTIS <span aria-hidden="true">↗</span></a></div>
+    </section>
+
     <section class="benefits container-wide" aria-label="Razones para elegirnos">
       <div class="benefit"><svg class="icon"><use href="#i-truck"/></svg><span><strong>ENVÍO A DOMICILIO</strong><small>Condiciones por configurar</small></span></div>
       <div class="benefit"><svg class="icon"><use href="#i-shield"/></svg><span><strong>CALIDAD PREMIUM</strong><small>Selección deportiva</small></span></div>
@@ -122,8 +154,39 @@
 
     <section class="offers" id="ofertas" aria-labelledby="offers-title"><div class="offers-image" aria-hidden="true"></div><div class="container-wide offers-content"><p class="eyebrow">SOLO EN ALANTIS SPORT</p><h2 id="offers-title">OFERTAS <span>ESPECIALES</span></h2><p>LAS MEJORES COLECCIONES, AL MEJOR ESTILO</p><a href="#tienda" class="btn btn-gold" id="offers-button">EXPLORAR PRODUCTOS <svg class="icon"><use href="#i-arrow"/></svg></a></div></section>
 
-    <section class="newsletter" aria-labelledby="newsletter-title"><div class="container-wide newsletter-inner"><div><h2 id="newsletter-title">ÚNETE A LA COMUNIDAD ALANTIS</h2><p>Recibe novedades, lanzamientos y contenido de entrenamiento.</p></div><form id="newsletter-form" class="newsletter-form"><label class="sr-only" for="newsletter-email">Tu correo electrónico</label><svg class="icon"><use href="#i-mail"/></svg><input type="email" id="newsletter-email" placeholder="Tu correo electrónico" autocomplete="email" required /><button type="submit" class="btn btn-gold">SUSCRIBIRME <svg class="icon"><use href="#i-arrow"/></svg></button></form></div></section>
+
+    <section class="sale-showcase container-wide premium-reveal" id="promociones" aria-labelledby="sale-title">
+      <div class="premium-heading premium-heading-compact"><div><p class="premium-kicker">PROMOCIONES REALES CUANDO ESTÉN ACTIVAS <span> / 04</span></p><h2 id="sale-title">PRECIO ESPECIAL.<br/><em>MISMA ACTITUD.</em></h2></div><p>Las rebajas se mostrarán aquí automáticamente cuando establezcas un precio anterior y otro rebajado desde administración.</p></div>
+      <div id="real-deals" class="deal-grid" aria-live="polite"><div class="deal-empty"><span class="deal-symbol">%</span><div><strong>PRÓXIMAMENTE: OFERTAS ALANTIS</strong><p>Cuando publiques descuentos, aparecerán en este espacio sin tener que tocar el código.</p></div><a href="#tienda" class="premium-text-link">VER CATÁLOGO ↗</a></div></div>
+      <p class="preview-disclaimer">Los códigos promocionales de demostración no constituyen ofertas válidas para pagar en Shopify.</p>
+    </section>
+
+    <section class="how-section premium-reveal" id="guia" aria-labelledby="how-title"><div class="container-wide">
+      <div class="premium-heading"><div><p class="premium-kicker">UNA EXPERIENCIA SENCILLA <span> / 05</span></p><h2 id="how-title">TU RUTA.<br/><em>TU PRÓXIMO NIVEL.</em></h2></div><p>Estamos preparando una experiencia de compra fácil y clara. Mientras terminamos la tienda, puedes explorar el catálogo de demostración.</p></div>
+      <div class="how-grid">
+        <article><span>01</span><h3>EXPLORA</h3><p>Descubre nuestras líneas de ropa, equipamiento y nutrición deportiva.</p></article>
+        <article><span>02</span><h3>ELIGE</h3><p>Consulta los artículos de ejemplo y guarda favoritos o prepara un carrito.</p></article>
+        <article><span>03</span><h3>VUELVE PRONTO</h3><p>Los pagos reales y el seguimiento de pedidos estarán disponibles tras activar Shopify.</p></article>
+      </div>
+    </div></section>
+
+    <section class="community-block container-wide premium-reveal" aria-labelledby="community-title"><div class="community-art" aria-hidden="true"><span>ALANTIS</span></div><div class="community-copy"><p class="premium-kicker">LA COMUNIDAD EMPIEZA AQUÍ</p><h2 id="community-title">VISTE TU<br/><em>AMBICIÓN.</em></h2><p>Una nueva comunidad deportiva está tomando forma. Próximamente incorporaremos lanzamientos, novedades y colaboraciones oficiales.</p><a href="#tienda" class="btn btn-gold">EXPLORAR LA TIENDA <svg class="icon"><use href="#i-arrow"/></svg></a></div></section>
+
+    <section class="faq-section container-wide premium-reveal" id="preguntas" aria-labelledby="faq-title">
+      <div class="premium-heading premium-heading-compact"><div><p class="premium-kicker">ESTAMOS AQUÍ PARA AYUDARTE <span> / 06</span></p><h2 id="faq-title">PREGUNTAS <em>FRECUENTES.</em></h2></div><p>Información transparente mientras terminamos la apertura comercial.</p></div>
+      <div class="faq-list">
+        <details><summary>¿YA PUEDO REALIZAR UN PEDIDO?<span class="faq-plus" aria-hidden="true">+</span></summary><p>Todavía no. La web funciona como catálogo de demostración y el pago mediante Shopify permanece desactivado hasta completar productos, envíos, impuestos y políticas.</p></details>
+        <details><summary>¿LOS PRECIOS Y DESCUENTOS SON DEFINITIVOS?<span class="faq-plus" aria-hidden="true">+</span></summary><p>No. Los precios y cupones actuales son orientativos. Cuando abramos la tienda, el precio y las promociones definitivas serán los publicados en Shopify.</p></details>
+        <details><summary>¿CÓMO SABRÉ MI TALLA?<span class="faq-plus" aria-hidden="true">+</span></summary><p>Publicaremos la guía de tallas específica de cada producto cuando esté confirmado su fabricante y la ficha del artículo.</p></details>
+        <details><summary>¿DÓNDE ENCONTRARÉ LOS PLAZOS DE ENVÍO Y DEVOLUCIÓN?<span class="faq-plus" aria-hidden="true">+</span></summary><p>Estarán disponibles antes de la apertura, junto con las condiciones comerciales y la información del vendedor.</p></details>
+        <details><summary>¿CÓMO ME ENTERO DE LOS LANZAMIENTOS?<span class="faq-plus" aria-hidden="true">+</span></summary><p>Estamos preparando la newsletter y los perfiles oficiales de ALANTIS SPORT. El formulario de esta web aún no registra correos.</p></details>
+      </div>
+    </section>
+
+    <section class="newsletter" aria-labelledby="newsletter-title"><div class="container-wide newsletter-inner"><div><h2 id="newsletter-title">ÚNETE A LA COMUNIDAD ALANTIS</h2><p>Próximamente recibirás novedades y lanzamientos cuando activemos la newsletter.</p><p class="newsletter-note">Formulario de demostración: por ahora no registramos tu correo electrónico.</p></div><form id="newsletter-form" class="newsletter-form"><label class="sr-only" for="newsletter-email">Tu correo electrónico</label><svg class="icon"><use href="#i-mail"/></svg><input type="email" id="newsletter-email" placeholder="Tu correo electrónico" autocomplete="email" required /><button type="submit" class="btn btn-gold">SUSCRIBIRME <svg class="icon"><use href="#i-arrow"/></svg></button></form></div></section>
   </main>
+
+  <nav class="mobile-quick-nav" aria-label="Accesos rápidos"><a href="#tienda"><svg class="icon"><use href="#i-search"/></svg><span>Productos</span></a><a href="#promociones"><svg class="icon"><use href="#i-bolt"/></svg><span>Ofertas</span></a><button type="button" id="mobile-cart-btn"><svg class="icon"><use href="#i-cart"/></svg><span>Carrito</span></button></nav>
 
   <footer class="site-footer" id="contacto"><div class="container-wide footer-main"><div class="footer-brand"><img src="assets/logo-completo.webp" alt="ALANTIS SPORT, logo" width="196" height="196"/><p>MÁS QUE UN DEPORTE.<br/>UN ESTILO DE VIDA.</p></div><div class="footer-col"><h3>TIENDA</h3><a href="#tienda" data-category="Todos">Todos los productos</a><a href="#tienda" data-category="Ropa deportiva">Ropa deportiva</a><a href="#tienda" data-category="Equipamiento">Equipamiento</a><a href="#tienda" data-category="Vitaminas">Vitaminas</a><a href="#tienda" data-category="Accesorios">Accesorios</a><a href="#ofertas">Ofertas</a></div><div class="footer-col"><h3>INFORMACIÓN</h3><button type="button" data-info="nosotros">Sobre nosotros</button><button type="button" data-info="envios">Envíos y devoluciones</button><button type="button" data-info="tallas">Guía de tallas</button><button type="button" data-info="preguntas">Preguntas frecuentes</button><button type="button" data-info="legal">Términos y condiciones</button><button type="button" data-info="privacidad">Política de privacidad</button></div><div class="footer-col"><h3>CONTACTO</h3><p>Atención al cliente: datos de contacto pendientes de añadir.</p><button type="button" data-info="contacto">Solicitar información</button></div><div class="footer-col social-col"><h3>SÍGUENOS</h3><div class="social-icons"><button type="button" aria-label="Instagram (pendiente de enlazar)" data-info="redes"><svg class="icon"><use href="#i-instagram"/></svg></button><button type="button" aria-label="YouTube (pendiente de enlazar)" data-info="redes"><svg class="icon"><use href="#i-youtube"/></svg></button><button type="button" aria-label="TikTok (pendiente de enlazar)" data-info="redes"><span class="social-text">♪</span></button></div><p>Disciplina. Constancia. Resultados.</p></div></div><div class="footer-bottom container-wide"><p>© <span id="current-year"></span> ALANTIS SPORT. Todos los derechos reservados. <span class="demo-label">TIENDA DE DEMOSTRACIÓN</span> <a href="admin.html" class="admin-access-link" title="Acceso al panel de administración">Administración ↗</a></p><div class="payment-names" aria-label="Integraciones de pago por configurar"><span>VISA</span><span>mastercard</span><span>PayPal</span><small>Pagos por conectar</small></div></div></footer>
 
