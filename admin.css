@@ -4,3 +4,14 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}.summary-grid{grid-template-
 @media(max-width:1280px){.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.marketing-grid,.settings-grid{grid-template-columns:1fr}}
 @media(max-width:900px){.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.section-heading{align-items:start}.side{overflow:visible}.side-link span{display:inline}}
 @media(max-width:600px){.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section-heading{display:block}.section-heading p{text-align:left;margin-top:8px}.filter-bar{grid-template-columns:1fr}.top-actions{width:100%}.top-actions .btn{flex:1}.side-link span{display:none}.bulkbar,.bulk-actions{padding-left:12px;padding-right:12px}.marketing-form{padding:17px}.product-row img{width:55px;height:59px}.product-line .product-row{padding:8px 5px}.product-row b{font-size:10px}}
+
+/* Pasarela a Shopify: enlaces seguros al Admin, sin credenciales embebidas */
+.shopify-bridge{padding:26px;margin-bottom:26px;border:1px solid rgba(213,170,82,.4)}
+.bridge-intro{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:24px}
+.bridge-intro h3{font-size:1.6rem;margin:0 0 8px;color:#f2d597}
+.bridge-intro p{font-size:.86rem;line-height:1.6;color:#c5c5c5;max-width:740px}
+.shopify-mark{border-radius:12px;padding:10px 18px;color:#000;background:#d9aa56;font-weight:900;font-size:2rem}
+.shopify-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.shopify-links .btn{font-size:12px}
+.shopify-switch{margin:18px 0}
+@media(max-width:780px){.shopify-bridge{padding:17px}.shopify-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.shopify-links .btn{font-size:11px;white-space:normal}}

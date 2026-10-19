@@ -15,7 +15,7 @@ let lookup = Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
 const escapeHtml=(v)=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const CATEGORIES=['Ropa deportiva','Calzado','Equipamiento','Vitaminas','Accesorios'];
 const safeImage=(v)=>{const src=String(v||'');return /^(assets\/[a-zA-Z0-9_./-]+\.(?:png|jpe?g|webp)|https:\/\/[a-zA-Z0-9._:/?=&%-]+)$/i.test(src)&&!src.includes('..')?src:'assets/shaker.webp';};
-const safeProduct=(p)=>{if(!p||typeof p!=='object'||!/^[a-z0-9][a-z0-9-]{1,63}$/.test(String(p.id)))return null;const price=Number(p.price);if(!Number.isFinite(price)||price<0||price>999999)return null;return {id:String(p.id),name:String(p.name||'Producto').slice(0,90),category:CATEGORIES.includes(p.category)?p.category:'Accesorios',price:Math.round(price*100)/100,oldPrice:Number.isFinite(Number(p.oldPrice))&&Number(p.oldPrice)>price?Number(p.oldPrice):null,description:String(p.description||'').slice(0,400),reviews:Math.max(0,Math.min(99999,Number(p.reviews)||0)),rating:Math.max(0,Math.min(5,Number(p.rating)||0)),image:safeImage(p.image),stock:Number.isInteger(Number(p.stock))?Math.max(0,Math.min(999999,Number(p.stock))):99,active:p.active!==false,featured:p.featured!==false};};
+const safeProduct=(p)=>{if(!p||typeof p!=='object'||!/^[a-z0-9][a-z0-9-]{1,63}$/.test(String(p.id)))return null;const price=Number(p.price);if(!Number.isFinite(price)||price<0||price>999999)return null;return {id:String(p.id),name:String(p.name||'Producto').slice(0,90),category:CATEGORIES.includes(p.category)?p.category:'Accesorios',price:Math.round(price*100)/100,oldPrice:Number.isFinite(Number(p.oldPrice))&&Number(p.oldPrice)>price?Number(p.oldPrice):null,description:String(p.description||'').slice(0,400),reviews:Math.max(0,Math.min(99999,Number(p.reviews)||0)),rating:Math.max(0,Math.min(5,Number(p.rating)||0)),image:safeImage(p.image),stock:Number.isInteger(Number(p.stock))?Math.max(0,Math.min(999999,Number(p.stock))):99,active:p.active!==false,featured:p.featured!==false,shopifyVariantId:/^[0-9]{6,20}$/.test(String(p.shopifyVariantId||''))?String(p.shopifyVariantId):''};};
 async function loadCatalog(){try{const response=await fetch('products.json',{cache:'no-store'});if(!response.ok)throw Error('Catálogo no encontrado');const items=await response.json();if(!Array.isArray(items))throw Error('Formato inválido');const ids=new Set();PRODUCTS=items.map(safeProduct).filter(p=>{if(!p||ids.has(p.id))return false;ids.add(p.id);return true;});lookup=Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));cart=Object.fromEntries(Object.entries(cart).filter(([id,q])=>lookup[id]?.active&&lookup[id].stock>0).map(([id,q])=>[id,Math.min(q,lookup[id].stock)]));favorites=new Set([...favorites].filter(id=>lookup[id]));persist();renderProducts();renderCart();}catch(error){console.warn('ALANTIS SPORT: usando catálogo de reserva',error.message);}}
 const safeGet = (key,fallback)=>{try{const value=JSON.parse(localStorage.getItem(key));return value===null?fallback:value;}catch{return fallback;}};
 const safeSet = (key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{/* Guardado opcional */}};
@@ -24,9 +24,24 @@ let cart=Object.fromEntries(Object.entries(initialCart).filter(([id,n])=>!!looku
 const initialWish=safeGet('alantis-demo-favs',[]);
 let favorites=new Set(Array.isArray(initialWish)?initialWish.filter(id=>!!lookup[id]):[]);
 let filter='Todos',search='',sort='featured',activeCoupon=null,toastTimeout=null,previousFocus=null,modalOpen=false,drawerOpen=false;
-let STORE_CONFIG={offersBanner:{active:true,eyebrow:'SOLO EN ALANTIS SPORT',title:'OFERTAS ESPECIALES',subtitle:'LAS MEJORES COLECCIONES, AL MEJOR ESTILO',buttonText:'EXPLORAR PRODUCTOS'},shipping:{freeFrom:60,flatRate:4.95},coupons:[]};
+let STORE_CONFIG={offersBanner:{active:true,eyebrow:'SOLO EN ALANTIS SPORT',title:'OFERTAS ESPECIALES',subtitle:'LAS MEJORES COLECCIONES, AL MEJOR ESTILO',buttonText:'EXPLORAR PRODUCTOS'},shipping:{freeFrom:60,flatRate:4.95},coupons:[],commerce:{provider:'shopify',shopDomain:'psm7b6-qs.myshopify.com',checkoutEnabled:false}};
+function normalizeCommerce(raw){
+ const domain=String(raw?.shopDomain||'').trim().toLowerCase();
+ return {provider:'shopify',shopDomain:/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(domain)?domain:'',checkoutEnabled:raw?.checkoutEnabled===true};
+}
+function getShopifyCartLink(){
+ const commerce=STORE_CONFIG.commerce||{};
+ if(!commerce.checkoutEnabled||!commerce.shopDomain)return {url:'',reason:'La tienda todavía no tiene habilitada la compra real en Shopify.'};
+ const lines=Object.entries(cart).filter(([id,qty])=>lookup[id]?.active&&qty>0);
+ if(!lines.length)return {url:'',reason:'El carrito está vacío.'};
+ const missing=lines.filter(([id])=>!lookup[id].shopifyVariantId).map(([id])=>lookup[id].name);
+ if(missing.length)return {url:'',reason:'Estos productos todavía no están vinculados a Shopify: '+missing.join(', ')+'.'};
+ const grouped=new Map();
+ for(const [id,qty] of lines){const variant=lookup[id].shopifyVariantId;grouped.set(variant,(grouped.get(variant)||0)+qty);}
+ return {url:'https://'+commerce.shopDomain+'/cart/'+[...grouped].map(([id,qty])=>id+':'+qty).join(','),reason:''};
+}
 async function loadStoreConfig(){try{const r=await fetch('store-config.json',{cache:'no-store'});if(!r.ok)throw Error('Sin configuración publicada');const data=await r.json();if(data&&typeof data==='object'&&Array.isArray(data.coupons)){
-STORE_CONFIG={...STORE_CONFIG,offersBanner:{...STORE_CONFIG.offersBanner,...data.offersBanner},shipping:{...STORE_CONFIG.shipping,...data.shipping},coupons:data.coupons};
+STORE_CONFIG={...STORE_CONFIG,offersBanner:{...STORE_CONFIG.offersBanner,...data.offersBanner},shipping:{...STORE_CONFIG.shipping,...data.shipping},coupons:data.coupons,commerce:normalizeCommerce(data.commerce)};
 const b=STORE_CONFIG.offersBanner,section=byId('ofertas');section.hidden=b.active===false;
 section.querySelector('.eyebrow').textContent=String(b.eyebrow||'OFERTAS');byId('offers-title').textContent=String(b.title||'OFERTAS ESPECIALES');
 section.querySelector('.offers-content>p:not(.eyebrow)').textContent=String(b.subtitle||'');byId('offers-button').firstChild.textContent=String(b.buttonText||'VER PRODUCTOS')+' ';
@@ -71,7 +86,12 @@ function renderCart(){
   byId('cart-discount').textContent=`−${EUR.format(discount)}`;
   byId('cart-shipping').textContent=items.length&&shipping===0?'GRATIS*':EUR.format(shipping);
   byId('cart-total').textContent=EUR.format(subtotal-discount+shipping);
-  byId('checkout-btn').disabled=!items.length;
+  const commerce=STORE_CONFIG.commerce||{};
+ const checkout=byId('checkout-btn');
+ checkout.disabled=!items.length;
+ checkout.firstChild.textContent=commerce.checkoutEnabled?'CONTINUAR A SHOPIFY ':'FINALIZAR PEDIDO (DEMO) ';
+ const info=byId('checkout-info');
+ info.textContent=commerce.checkoutEnabled?'Pago, impuestos, stock y envío se verifican en Shopify. Los precios y cupones de esta web son orientativos; solo los descuentos creados en Shopify se aplican al pago.':'Escaparate en modo demo: todavía no se aceptan pagos ni pedidos reales.';
 }
 function showOverlay(){const el=byId('screen-overlay');el.hidden=false;requestAnimationFrame(()=>el.classList.add('is-visible'));document.body.classList.add('locked');}
 function hideOverlay(){const el=byId('screen-overlay');el.classList.remove('is-visible');el.hidden=true;document.body.classList.remove('locked');}
@@ -109,8 +129,13 @@ byId('cart-open').addEventListener('click',openCart);
 byId('cart-close').addEventListener('click',closeCart);
 byId('continue-shopping').addEventListener('click',closeCart);
 byId('screen-overlay').addEventListener('click',()=>{if(drawerOpen)closeCart();if(modalOpen)closeModal();});
-byId('account-btn').addEventListener('click',()=>openModal('MI CUENTA','La creación de cuentas se activará cuando conectemos una plataforma de comercio electrónico (Shopify, WooCommerce o un sistema de pedidos).'));
-byId('checkout-btn').addEventListener('click',()=>openModal('PAGO PENDIENTE DE ACTIVAR','Tu carrito funciona en modo demostración, pero todavía no procesa compras reales. Para recibir pedidos y pagos hay que vincular una plataforma ecommerce y configurar métodos de pago, impuestos, envíos y datos legales.'));
+byId('account-btn').addEventListener('click',()=>{const commerce=STORE_CONFIG.commerce;if(commerce?.checkoutEnabled&&commerce.shopDomain){window.location.assign('https://'+commerce.shopDomain+'/account');return;}openModal('MI CUENTA','Las cuentas de clientes estarán disponibles a través de Shopify cuando la tienda comercial esté activa.');});
+byId('checkout-btn').addEventListener('click',()=>{
+ const checkout=getShopifyCartLink();
+ if(!checkout.url){openModal('PAGO NO DISPONIBLE',checkout.reason+' Configura los artículos reales desde el panel de administración y activa la compra solo cuando Shopify esté preparado.');return;}
+ // No se envían precios locales, tokens ni datos personales: Shopify determina el importe real.
+ window.location.assign(checkout.url);
+});
 byId('apply-promo').addEventListener('click',()=>{const code=byId('promo-code').value.trim().toUpperCase();const subtotal=Object.entries(cart).reduce((sum,[id,q])=>sum+(lookup[id]?.price||0)*q,0);const result=validCoupon(code,subtotal);activeCoupon=result.coupon?code:null;byId('promo-message').textContent=result.message;if(activeCoupon)showToast('Cupón aplicado (demostración)');renderCart();});
 byId('newsletter-form').addEventListener('submit',(event)=>{event.preventDefault();openModal('SUSCRIPCIÓN EN PREPARACIÓN','El formulario tiene diseño y validación, pero todavía no almacena tu email ni envía mensajes. Para activar suscripciones reales, conecta Mailchimp, Shopify Email u otra herramienta autorizada.');});
 byId('modal-close').addEventListener('click',closeModal);

@@ -65,3 +65,25 @@ Los productos, reseñas, precios, ofertas y existencias actuales son **datos ilu
 6. Verificar específicamente el etiquetado, información obligatoria y alegaciones permitidas para vitaminas y suplementos alimenticios destinados al mercado español/UE.
 
 Los recursos visuales de demostración proceden de la imagen de referencia facilitada por el usuario y del logotipo diseñado para este proyecto. Las imágenes de productos son ilustrativas. La web utiliza Google Fonts cuando hay conexión; se mantienen fuentes alternativas sin internet.
+
+## Integración Shopify · preparado para cobros reales
+
+- Shopify conectado: **`psm7b6-qs.myshopify.com`**, España, EUR. A fecha de esta versión, se ha comprobado que el plan está en **trial** y **no hay productos reales** en Shopify.
+- La tienda alojada en GitHub Pages es solo el escaparate. El panel `admin.html` incluye **Shopify · Centro comercial** con enlaces a **Productos, Pedidos, Clientes, Descuentos y Pagos** dentro de Shopify Admin.
+- Para asociar un producto de esta web con el producto real, crea primero el producto (y su variante) en Shopify y copia su **ID numérico de variante** al campo correspondiente de `admin.html`.
+- Al seleccionar **Habilitar el botón que envía el carrito a Shopify** y publicar los cambios, el checkout irá a la URL de carrito alojada por Shopify (`https://{shop}.myshopify.com/cart/{variantId}:{quantity},...`) *solo si todos los artículos del carrito tienen variante*.
+- **Por seguridad el checkout viene deshabilitado** (`store-config.json → commerce.checkoutEnabled: false`). No se activa automáticamente por editar productos ni por configurar un dominio.
+- **Los precios, envío, stock y cupones de GitHub son ilustrativos** y NO se sincronizan con Shopify. Shopify establece los importes definitivos, valida existencias y procesa pagos. No se remiten tokens, correos o tarjetas desde GitHub Pages. Los descuentos del editor demo **no** crean descuentos en Shopify.
+- Los productos de demostración, en particular suplementos, NO se deben publicar para cobro sin proveedores, stock, fotos y etiquetado reales, validación legal y configuración de impuestos y envíos.
+- El editor de GitHub Pages **no es un panel privado**: su URL es pública. Los datos de pedidos y clientes únicamente están disponibles desde el panel autenticado de Shopify.
+
+### Pasos para lanzar ventas reales
+
+1. Seleccionar un plan de pago en Shopify y verificar la cuenta; después configurar la pasarela en Shopify Admin → Configuración → Pagos.
+2. Añadir productos reales con fotos, descripciones verificadas, variantes, precios y stock a Shopify; publicarlos en el canal Online Store.
+3. Configurar envíos, impuestos, devoluciones y avisos legales para España y la UE. Si vendes vitaminas o suplementos, verificar composición, etiquetado, condiciones y declaraciones permitidas.
+4. Copiar los IDs de variante a `admin.html` y publicar el catálogo en GitHub.
+5. Hacer un **pedido de prueba** en Shopify con su función de pruebas (con un plan compatible), comparar precios finales y confirmar que llega al panel Pedidos.
+6. Solo entonces activar el checkout desde `admin.html` y publicar `store-config.json`.
+
+Más información oficial: https://help.shopify.com/es/manual/checkout-settings/cart-permalink

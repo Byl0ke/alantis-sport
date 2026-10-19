@@ -11,7 +11,8 @@
     "stock": 30,
     "active": true,
     "featured": true,
-    "description": "Camiseta técnica negra y dorada de demostración."
+    "description": "Camiseta técnica negra y dorada de demostración.",
+    "shopifyVariantId": ""
   },
   {
     "id": "zapatillas",
@@ -25,7 +26,8 @@
     "stock": 24,
     "active": true,
     "featured": true,
-    "description": "Zapatillas deportivas de demostración."
+    "description": "Zapatillas deportivas de demostración.",
+    "shopifyVariantId": ""
   },
   {
     "id": "guantes",
@@ -39,7 +41,8 @@
     "stock": 40,
     "active": true,
     "featured": true,
-    "description": "Guantes deportivos de demostración."
+    "description": "Guantes deportivos de demostración.",
+    "shopifyVariantId": ""
   },
   {
     "id": "proteina",
@@ -53,7 +56,8 @@
     "stock": 15,
     "active": true,
     "featured": true,
-    "description": "Producto ilustrativo: verifica etiquetado, composición y requisitos legales antes de vender."
+    "description": "Producto ilustrativo: verifica etiquetado, composición y requisitos legales antes de vender.",
+    "shopifyVariantId": ""
   },
   {
     "id": "creatina",
@@ -67,7 +71,8 @@
     "stock": 20,
     "active": true,
     "featured": true,
-    "description": "Producto ilustrativo: verifica etiquetado, composición y requisitos legales antes de vender."
+    "description": "Producto ilustrativo: verifica etiquetado, composición y requisitos legales antes de vender.",
+    "shopifyVariantId": ""
   },
   {
     "id": "shaker",
@@ -81,6 +86,7 @@
     "stock": 55,
     "active": true,
     "featured": true,
-    "description": "Botella mezcladora de demostración."
+    "description": "Botella mezcladora de demostración.",
+    "shopifyVariantId": ""
   }
 ]

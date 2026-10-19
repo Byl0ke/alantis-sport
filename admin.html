@@ -23,16 +23,17 @@
       <a class="side-link" href="#inventario">▤ <span>Inventario</span></a>
       <a class="side-link" href="#descuentos">% <span>Ofertas y cupones</span></a>
       <a class="side-link" href="#configuracion">⚙ <span>Configuración</span></a>
+      <a class="side-link" href="#shopify-panel">◫ <span>Ventas Shopify</span></a>
       <a class="side-link" href="./" target="_blank" rel="noopener noreferrer">↗ <span>Ver tienda pública</span></a>
       <a class="side-link" href="https://github.com/Byl0ke/alantis-sport" target="_blank" rel="noopener noreferrer">⌘ <span>Repositorio GitHub</span></a>
       <div class="side-help"><span class="help-spark">✦</span><strong>Control total del escaparate.</strong><p>Gestiona precios, ofertas, stock y contenido desde un mismo lugar. GitHub confirma cada publicación.</p></div>
-      <div class="side-bottom">ALANTIS SPORT <span>v2.0 · Tienda demo</span></div>
+      <div class="side-bottom">ALANTIS SPORT <span>v3.0 · Shopify preparado</span></div>
     </aside>
 
     <main class="workspace" id="resumen">
       <header class="topbar"><div><span class="eyebrow">ALANTIS SPORT / ECOMMERCE</span><h1>Centro de <em>administración</em></h1><p>Gestiona productos, promociones, stock y aspecto de la tienda.</p></div><div class="top-actions"><a class="btn btn-light" href="./" target="_blank" rel="noopener noreferrer">↗ Ver tienda</a><button id="publish-top" class="btn btn-gold" type="button">↑ Publicar en GitHub</button></div></header>
 
-      <div class="notice" role="note"><span>ℹ</span><div><strong>Catálogo de demostración.</strong> No existen ventas ni pedidos reales: las estadísticas son solo del catálogo y el stock no se descuenta automáticamente. Este panel es público, pero <strong>solo quien tenga autorización de escritura en GitHub</strong> puede publicar cambios. Nunca compartas tu token.</div></div>
+      <div class="notice" role="note"><span>ℹ</span><div><strong>Shopify conectado para preparar las ventas.</strong> La tienda Shopify sigue sin productos y en periodo de prueba. No existen ventas ni pedidos reales: las estadísticas son solo del catálogo y el stock no se descuenta automáticamente. Este panel es público, pero <strong>solo quien tenga autorización de escritura en GitHub</strong> puede publicar cambios. Nunca compartas tu token.</div></div>
 
       <section class="summary-grid" aria-label="Resumen del catálogo">
         <div class="stat"><span>PRODUCTOS</span><strong id="stat-total">—</strong><small>En tu catálogo</small></div>
@@ -41,6 +42,7 @@
         <div class="stat"><span>EN OFERTA</span><strong id="stat-offers">—</strong><small>Precios rebajados</small></div>
         <div class="stat"><span>STOCK BAJO</span><strong id="stat-low">—</strong><small id="stock-threshold-label">5 unidades o menos</small></div>
         <div class="stat"><span>VALOR DE INVENTARIO</span><strong id="stat-inventory">—</strong><small>Estimación · no son ventas</small></div>
+        <div class="stat"><span>VINCULADOS A SHOPIFY</span><strong id="stat-shopify">—</strong><small>Variantes enlazadas</small></div>
         <div class="stat"><span>ESTADO</span><strong id="stat-state" class="stat-state">Cargando…</strong><small id="stat-state-info">Leyendo catálogo</small></div>
       </section>
 
@@ -66,6 +68,7 @@
               <label class="field">Precio anterior / tachado (€) <input id="field-oldprice" type="number" min="0" max="999999" step="0.01" placeholder="Opcional" /></label>
               <label class="field">Unidades en stock <input id="field-stock" type="number" min="0" max="999999" step="1" required /></label>
               <div class="sale-tip span-2" id="sale-tip">Para mostrar una oferta, indica un precio anterior superior al precio actual.</div><label class="field span-2">Descripción <textarea id="field-description" maxlength="400" rows="3" placeholder="Materiales, tallas, características... (máx. 400 caracteres)"></textarea></label>
+              <label class="field span-2">ID de variante de Shopify (solo para artículos reales) <input id="field-variant" type="text" inputmode="numeric" pattern="[0-9]{6,20}" maxlength="20" placeholder="Ej.: 36485954240671" /><small>Encuéntralo en Shopify → Productos → Variante. Sin ID seguirá siendo demostración.</small></label>
               <label class="field span-2">URL de imagen (HTTPS o ruta assets/) <input id="field-image" placeholder="assets/mi-producto.webp" /></label>
               <label class="field image-upload span-2">O subir una fotografía nueva (PNG, JPG, WebP) <input id="field-photo" type="file" accept="image/png,image/jpeg,image/webp" /><span id="file-hint">Se optimizará a formato WebP al publicar.</span></label>
             </div>
@@ -104,6 +107,23 @@
       <div class="section-heading" id="configuracion"><div><span class="eyebrow">AJUSTES</span><h2>CONFIGURACIÓN Y COPIAS</h2></div></div>
       <section class="settings-grid"><div class="editor-panel marketing-form"><h3>Envíos de demostración</h3><div class="form-grid"><label class="field">Envío gratis desde (€) <input id="setting-free-shipping" type="number" min="0" max="999999" step="0.01" /></label><label class="field">Envío estándar (€) <input id="setting-shipping-fee" type="number" min="0" max="999999" step="0.01" /></label><label class="field">Aviso de stock bajo (unidades) <input id="setting-stock-warning" type="number" min="0" max="999999" step="1" /></label></div></div>
       <div class="editor-panel marketing-form"><h3>Seguridad y respaldos</h3><p class="hint-block">Guarda una copia con productos y promociones, o recupera una anterior. La importación modifica el borrador, no GitHub, hasta que pulses publicar.</p><div class="form-actions"><button id="export-all" class="btn btn-light" type="button">↓ Descargar copia completa</button><label for="import-all" class="btn btn-dark file-import">↑ Importar copia</label><input id="import-all" type="file" accept="application/json,.json" hidden /></div></div></section>
+      <div class="section-heading" id="shopify-panel"><div><span class="eyebrow">VENTAS Y CLIENTES</span><h2>SHOPIFY · CENTRO COMERCIAL</h2></div><p>Las compras y los datos personales se gestionan en Shopify, no en GitHub Pages.</p></div>
+      <section class="shopify-bridge editor-panel">
+        <div class="bridge-intro"><div><h3>Conexión a Shopify</h3><p>Conecta cada producto con su variante real de Shopify. El checkout está desactivado hasta que elijas activarlo y cumplas los requisitos de venta.</p><p class="hint-block" id="shopify-summary">Comprobando catálogo...</p></div><span class="shopify-mark">S</span></div>
+        <div class="form-grid">
+          <label class="field">Dominio Shopify <input id="setting-shopify-domain" autocomplete="off" placeholder="psm7b6-qs.myshopify.com" /></label>
+          <label class="field">Pasarela de pago <input value="Checkout alojado por Shopify" disabled aria-label="Pasarela de pago" /></label>
+        </div>
+        <label class="checkline shopify-switch"><input id="setting-checkout-enabled" type="checkbox" /> Habilitar el botón que envía el carrito a Shopify</label>
+        <p class="hint-block">⚠ <b>No actives la compra</b> hasta tener plan de pago, productos reales disponibles y publicados, pagos, envíos, impuestos, textos legales y, para suplementos, etiquetado reglamentario. Los precios, promociones y stock de este panel son ilustrativos: el checkout usa los datos que tengas configurados en Shopify.</p>
+        <div class="shopify-links">
+          <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/products">Productos reales ↗</a>
+          <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/orders">Pedidos ↗</a>
+          <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/customers">Clientes ↗</a>
+          <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/discounts">Descuentos reales ↗</a>
+          <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://admin.shopify.com/store/psm7b6-qs/settings/payments">Configurar cobros ↗</a>
+        </div>
+      </section>
       <section class="publish-panel" aria-labelledby="publish-heading"><div class="publish-head"><span class="eyebrow">SINCRONIZACIÓN SEGURA</span><h2 id="publish-heading">Publicar cambios en <em>GitHub</em></h2><p>Los cambios no se ven en la tienda hasta publicar <code>products.json</code> y <code>store-config.json</code>. No pegues la clave en el código: introdúcela aquí solo cuando vayas a publicar.</p></div><div class="connect-grid"><label class="field">Token temporal de GitHub <input id="github-token" type="password" spellcheck="false" autocomplete="new-password" placeholder="github_pat_..." aria-describedby="token-explain" /></label><button id="check-github" class="btn btn-light" type="button">Comprobar acceso</button></div><p id="token-explain" class="hint">Crea un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Fine-grained personal access token</a> limitado a <b>Byl0ke/alantis-sport</b>, con permiso <b>Contents: Read and write</b>. La clave se guarda solo en la memoria de esta pestaña; no se almacena ni se incluye en los archivos. Cierra la pestaña para descartarla.</p><div class="publish-foot"><div class="status" id="status" role="status" aria-live="polite">Listo para editar el catálogo.</div><button class="btn btn-gold" id="publish-bottom" type="button">↑ Publicar todos los cambios</button></div></section>
 
       <footer class="bottom-copy">© <span id="year"></span> ALANTIS SPORT · Editor estático para GitHub Pages · <a href="./">Volver a la tienda</a></footer>

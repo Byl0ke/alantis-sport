@@ -21,5 +21,10 @@
       "start": "",
       "end": ""
     }
-  ]
+  ],
+  "commerce": {
+    "provider": "shopify",
+    "shopDomain": "psm7b6-qs.myshopify.com",
+    "checkoutEnabled": false
+  }
 }

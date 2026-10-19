@@ -35,3 +35,9 @@ El sitio ya usa rutas relativas (`styles.css`, `app.js`, `assets/`), así que fu
 Abre `https://byl0ke.github.io/alantis-sport/admin.html` para administrar productos, inventario, cupones, ofertas y banner. El panel actualiza `products.json` y `store-config.json`. Para guardar cambios en la web, crea un Fine-grained personal access token de GitHub restringido a este repositorio (permiso `Contents: Read and write`) y publica desde el panel. El token permanece únicamente en la memoria de esa pestaña; no lo compartas ni lo subas al repositorio.
 
 También puedes usar `Guardar borrador`, exportar CSV, descargar copias completas e importar un respaldo sin conectar GitHub. Los cambios locales no se publican automáticamente.
+
+## Conexión con Shopify y pagos
+
+La sección **Shopify · Centro comercial** del panel de administración enlaza con el Shopify Admin autenticado para pedidos y clientes, sin revelar información privada en el repositorio. El checkout de este proyecto queda en modo demostración hasta que se habilite explícitamente y todos los artículos tengan IDs de variante reales.
+
+**Shopify conectado:** `psm7b6-qs.myshopify.com`. Debes elegir un plan de pago, crear productos reales, configurar impuestos, envíos, la pasarela de pago y completar las páginas legales antes de comenzar a vender. Los cupones del escaparate no se sincronizan con Shopify.
