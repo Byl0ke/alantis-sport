@@ -7,3 +7,6 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 /* Evita desbordamiento horizontal en los titulares del móvil. */
 @media(max-width:760px){.section-heading{display:block}.section-heading .text-link{display:inline-flex;margin-top:6px}.products-section,.site-footer{overflow-x:clip}}
+
+/* Catálogo dinámico */
+.stock-pill{position:absolute;left:10px;top:10px;background:#171717;color:#fff;border-radius:4px;font-size:11px;font-weight:800;letter-spacing:.08em;padding:8px 12px;z-index:2}.product-price del{color:#868686;font-size:.73em;margin-left:7px;font-weight:500}.buy-btn:disabled{background:#555!important;color:#ddd!important;cursor:not-allowed}

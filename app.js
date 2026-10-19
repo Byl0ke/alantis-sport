@@ -1,7 +1,7 @@
 'use strict';
 
-// Catálogo DEMO: edita esta lista para cambiar nombres, precios e imágenes.
-const PRODUCTS = [
+// Catálogo de reserva: se usa si products.json no se puede leer (p. ej., archivo local).
+let PRODUCTS = [
   {id:'camiseta',name:'Camiseta Performance ALANTIS',category:'Ropa deportiva',price:24.99,oldPrice:null,reviews:128,image:'assets/camiseta.webp',rating:5},
   {id:'zapatillas',name:'Zapatillas Running Pro',category:'Calzado',price:79.99,oldPrice:null,reviews:86,image:'assets/zapatillas.webp',rating:5},
   {id:'guantes',name:'Guantes de Entrenamiento',category:'Equipamiento',price:34.99,oldPrice:null,reviews:64,image:'assets/guantes.webp',rating:5},
@@ -11,7 +11,12 @@ const PRODUCTS = [
 ];
 const EUR = new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR'});
 const byId = (id)=> document.getElementById(id);
-const lookup = Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
+let lookup = Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
+const escapeHtml=(v)=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const CATEGORIES=['Ropa deportiva','Calzado','Equipamiento','Vitaminas','Accesorios'];
+const safeImage=(v)=>{const src=String(v||'');return /^(assets\/[a-zA-Z0-9_./-]+\.(?:png|jpe?g|webp)|https:\/\/[a-zA-Z0-9._:/?=&%-]+)$/i.test(src)&&!src.includes('..')?src:'assets/shaker.webp';};
+const safeProduct=(p)=>{if(!p||typeof p!=='object'||!/^[a-z0-9][a-z0-9-]{1,63}$/.test(String(p.id)))return null;const price=Number(p.price);if(!Number.isFinite(price)||price<0||price>999999)return null;return {id:String(p.id),name:String(p.name||'Producto').slice(0,90),category:CATEGORIES.includes(p.category)?p.category:'Accesorios',price:Math.round(price*100)/100,oldPrice:Number.isFinite(Number(p.oldPrice))&&Number(p.oldPrice)>price?Number(p.oldPrice):null,description:String(p.description||'').slice(0,400),reviews:Math.max(0,Math.min(99999,Number(p.reviews)||0)),rating:Math.max(0,Math.min(5,Number(p.rating)||0)),image:safeImage(p.image),stock:Number.isInteger(Number(p.stock))?Math.max(0,Math.min(999999,Number(p.stock))):99,active:p.active!==false,featured:p.featured!==false};};
+async function loadCatalog(){try{const response=await fetch('products.json',{cache:'no-store'});if(!response.ok)throw Error('Catálogo no encontrado');const items=await response.json();if(!Array.isArray(items))throw Error('Formato inválido');const ids=new Set();PRODUCTS=items.map(safeProduct).filter(p=>{if(!p||ids.has(p.id))return false;ids.add(p.id);return true;});lookup=Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));cart=Object.fromEntries(Object.entries(cart).filter(([id,q])=>lookup[id]?.active&&lookup[id].stock>0).map(([id,q])=>[id,Math.min(q,lookup[id].stock)]));favorites=new Set([...favorites].filter(id=>lookup[id]));persist();renderProducts();renderCart();}catch(error){console.warn('ALANTIS SPORT: usando catálogo de reserva',error.message);}}
 const safeGet = (key,fallback)=>{try{const value=JSON.parse(localStorage.getItem(key));return value===null?fallback:value;}catch{return fallback;}};
 const safeSet = (key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{/* Guardado opcional */}};
 const initialCart=safeGet('alantis-demo-cart',{});
@@ -21,16 +26,17 @@ let favorites=new Set(Array.isArray(initialWish)?initialWish.filter(id=>!!lookup
 let filter='Todos',search='',sort='featured',discountActive=false,toastTimeout=null,previousFocus=null,modalOpen=false,drawerOpen=false;
 
 function renderProducts(){
-  let result=PRODUCTS.filter(p=> (filter==='Todos'||p.category===filter) && (`${p.name} ${p.category}`.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es'))));
+  let result=PRODUCTS.filter(p=> p.active && (filter==='Todos'||p.category===filter) && (`${p.name} ${p.category}`.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es'))));
+  if(sort==='featured')result=result.sort((a,b)=>Number(b.featured)-Number(a.featured));
   if(sort==='asc')result=result.sort((a,b)=>a.price-b.price);
   if(sort==='desc')result=result.sort((a,b)=>b.price-a.price);
   if(sort==='name')result=result.sort((a,b)=>a.name.localeCompare(b.name,'es'));
   const grid=byId('product-grid');
-  grid.innerHTML=result.map((p)=>`<article class="product-card">
-    <div class="product-image-wrap"><img class="product-image" src="${p.image}" alt="${p.name}" loading="lazy" width="450" height="456"/></div>
-    <button type="button" class="heart-btn ${favorites.has(p.id)?'active':''}" data-favorite="${p.id}" aria-label="${favorites.has(p.id)?'Quitar de':'Añadir a'} favoritos: ${p.name}" aria-pressed="${favorites.has(p.id)}"><svg class="icon"><use href="#i-heart"/></svg></button>
-    <div class="product-info"><div class="product-category">${p.category}</div><h3 class="product-name">${p.name}</h3><div class="rating" aria-label="Valoración ilustrativa: ${p.rating} de 5"><span class="rating-stars" aria-hidden="true">★★★★★</span><span>(${p.reviews})</span></div><div class="product-price">${EUR.format(p.price)}</div><button type="button" data-add="${p.id}" class="btn btn-gold buy-btn"><svg class="icon"><use href="#i-cart"/></svg>AÑADIR AL CARRITO</button></div>
-  </article>`).join('');
+  grid.innerHTML=result.map((p)=>{const soldOut=p.stock===0;return `<article class="product-card">
+    <div class="product-image-wrap"><img class="product-image" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" width="450" height="456"/>${soldOut?'<span class="stock-pill">AGOTADO</span>':''}</div>
+    <button type="button" class="heart-btn ${favorites.has(p.id)?'active':''}" data-favorite="${escapeHtml(p.id)}" aria-label="${favorites.has(p.id)?'Quitar de':'Añadir a'} favoritos: ${escapeHtml(p.name)}" aria-pressed="${favorites.has(p.id)}"><svg class="icon"><use href="#i-heart"/></svg></button>
+    <div class="product-info"><div class="product-category">${escapeHtml(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><div class="rating" aria-label="Valoración ilustrativa: ${p.rating} de 5"><span class="rating-stars" aria-hidden="true">★★★★★</span><span>(${p.reviews})</span></div><div class="product-price">${EUR.format(p.price)}${p.oldPrice?` <del>${EUR.format(p.oldPrice)}</del>`:''}</div><button type="button" data-add="${escapeHtml(p.id)}" class="btn btn-gold buy-btn" ${soldOut?'disabled':''}><svg class="icon"><use href="#i-cart"/></svg>${soldOut?'SIN EXISTENCIAS':'AÑADIR AL CARRITO'}</button></div>
+  </article>`;}).join('');
   byId('no-results').hidden=result.length>0;
   byId('results-indicator').textContent=(search||filter!=='Todos')?`${result.length} producto${result.length===1?'':'s'} encontrado${result.length===1?'':'s'}${search?` para «${search}»`:''}`:'';
   document.querySelectorAll('[data-filter]').forEach(el=>{const active=el.dataset.filter===filter;el.classList.toggle('selected',active);el.setAttribute('aria-pressed',String(active))});
@@ -38,13 +44,13 @@ function renderProducts(){
 function persist(){safeSet('alantis-demo-cart',cart);safeSet('alantis-demo-favs',[...favorites]);}
 function showToast(msg){const el=byId('toast');el.textContent=msg;el.classList.add('is-shown');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('is-shown'),3000);}
 function changeFilter(next){filter=next;search='';byId('site-search').value='';renderProducts();closeMobileMenu();}
-function changeQuantity(id,delta){const current=cart[id]||0;const next=Math.max(0,Math.min(99,current+delta));if(next)cart[id]=next;else delete cart[id];persist();renderCart();}
-function addToCart(id){changeQuantity(id,1);showToast(`${lookup[id].name} añadido al carrito`);}
+function changeQuantity(id,delta){const current=cart[id]||0;const next=Math.max(0,Math.min(99,lookup[id]?.stock??99,current+delta));if(next)cart[id]=next;else delete cart[id];persist();renderCart();}
+function addToCart(id){if(!lookup[id]?.active||lookup[id].stock<1){showToast('Producto agotado');return;}if((cart[id]||0)>=lookup[id].stock){showToast('Has alcanzado el stock disponible');return;}changeQuantity(id,1);showToast(`${lookup[id].name} añadido al carrito`);}
 function renderCart(){
   const items=Object.entries(cart).filter(([id,q])=>lookup[id]&&q>0);
   const units=items.reduce((sum,[,q])=>sum+q,0);
   byId('cart-count').textContent=units;byId('cart-title-count').textContent=`(${units})`;
-  byId('cart-items').innerHTML=items.length?items.map(([id,q])=>{const p=lookup[id];return `<div class="cart-line"><img src="${p.image}" alt=""/><div><strong>${p.name}</strong><small>${EUR.format(p.price)}</small><div class="quantity-control"><button type="button" data-qty="${id}" data-delta="-1" aria-label="Reducir cantidad de ${p.name}">−</button><span>${q}</span><button type="button" data-qty="${id}" data-delta="1" aria-label="Aumentar cantidad de ${p.name}">+</button></div></div><button class="remove-line" type="button" data-remove="${id}">Quitar</button></div>`;}).join(''):`<div class="empty-cart"><svg class="icon"><use href="#i-cart"/></svg><h3>¡TU CARRITO TE ESPERA!</h3><p>Añade tus productos favoritos<br/>y empieza a superarte.</p></div>`;
+  byId('cart-items').innerHTML=items.length?items.map(([id,q])=>{const p=lookup[id];return `<div class="cart-line"><img src="${escapeHtml(p.image)}" alt=""/><div><strong>${escapeHtml(p.name)}</strong><small>${EUR.format(p.price)}</small><div class="quantity-control"><button type="button" data-qty="${id}" data-delta="-1" aria-label="Reducir cantidad de ${escapeHtml(p.name)}">−</button><span>${q}</span><button type="button" data-qty="${id}" data-delta="1" aria-label="Aumentar cantidad de ${escapeHtml(p.name)}">+</button></div></div><button class="remove-line" type="button" data-remove="${id}">Quitar</button></div>`;}).join(''):`<div class="empty-cart"><svg class="icon"><use href="#i-cart"/></svg><h3>¡TU CARRITO TE ESPERA!</h3><p>Añade tus productos favoritos<br/>y empieza a superarte.</p></div>`;
   const subtotal=items.reduce((sum,[id,q])=>sum+lookup[id].price*q,0);
   const discount=discountActive?Math.round(subtotal*10)/100:0;
   const shipping=items.length?(subtotal-discount>=60?0:4.95):0;
@@ -102,3 +108,4 @@ document.querySelector('.search-form>button').addEventListener('click',(event)=>
 document.addEventListener('keydown',(event)=>{if(event.key==='Escape'){if(drawerOpen)closeCart();if(modalOpen)closeModal();closeMobileMenu();document.querySelector('.search-form').classList.remove('is-expanded');}});
 byId('current-year').textContent=String(new Date().getFullYear());
 renderProducts();renderCart();
+loadCatalog();

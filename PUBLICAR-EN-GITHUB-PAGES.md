@@ -1,18 +1,37 @@
 # Publicar ALANTIS SPORT en GitHub Pages
 
-La web se ha subido a la rama `main`: `index.html`, `styles.css`, `app.js`, `README.md` y `.nojekyll`.
+El sitio ya usa rutas relativas (`styles.css`, `app.js`, `assets/`), así que funciona en una URL de proyecto de GitHub Pages, como `https://byl0ke.github.io/alantis-sport/`.
 
-## Pasos pendientes
+## Preparar el repositorio
 
-1. **Añadir las imágenes reales:** descarga `alantis-sport-assets-github.zip` entregado en ChatGPT, descomprímelo, abre el repositorio, ve a **Add file > Upload files** y arrastra la carpeta `assets` completa. Debe quedar `assets/hero.webp`, `assets/favicon.png`, etc. en la raíz del repositorio. Confirma con **Commit changes**. No subas el ZIP sin descomprimir.
-2. **Cambiar visibilidad a pública si quieres GitHub Pages gratis:** **Settings > General > Danger Zone > Change repository visibility > Make public**. Al hacer esto se publicará también el código fuente de la tienda. No incluyas claves ni secretos.
-3. **Activar GitHub Pages:** **Settings > Pages > Build and deployment > Source: Deploy from a branch**. Selecciona rama `main` y carpeta `/(root)`, después pulsa **Save**.
-4. Espera a que GitHub termine el despliegue y abre **https://byl0ke.github.io/alantis-sport/**.
+1. Entra en https://github.com/new.
+2. Propietario: `Byl0ke`; nombre: `alantis-sport`; visibilidad: **Public**.
+3. Marca **Add a README file**, y pulsa **Create repository**.
 
-## Verificaciones
+## Subir la web
 
-- Que se vea el hero y logotipo dorado y negro; si faltan fotografías, comprueba la carpeta `assets`.
-- Que funcionen buscador, filtros, favoritos y carrito de demostración.
-- Que la web se adapte al móvil.
+1. En el repositorio, pulsa **Add file > Upload files**.
+2. Arrastra **todos los archivos y la carpeta `assets/`** de esta web, de modo que `index.html`, `styles.css` y `app.js` queden **en la raíz** del repositorio, no dentro de una carpeta `alantis-sport-web`.
+3. Pulsa **Commit changes** en `main`.
 
-> Esta es una demo estática con productos y precios de ejemplo; no dispone de pagos ni pedidos reales. Para comercializar productos, integrar plataforma de comercio, completar políticas legales, impuestos e información obligatoria de suplementos alimenticios.
+## Activar Pages
+
+1. Abre **Settings > Pages** del repositorio.
+2. En **Build and deployment**, selecciona **Deploy from a branch**.
+3. En **Branch**, elige `main` y la carpeta `/ (root)`, y pulsa **Save**.
+4. Tras el despliegue, la web debería aparecer en `https://byl0ke.github.io/alantis-sport/` (la URL solo funcionará una vez que GitHub Pages haya publicado el sitio).
+
+## Comprobar
+
+- Se ve el logo dorado y negro.
+- Se muestran las imágenes de productos y el banner.
+- El catálogo, los filtros, el buscador y el carrito se pueden utilizar.
+- La versión móvil es correcta.
+
+**Importante**: Es una demo de tienda estática, sin pagos ni gestión de pedidos reales. Los precios, productos y gastos de envío actuales son ilustrativos. Antes de vender, hay que conectar una solución comercial y completar datos legales y de contacto.
+
+## Gestionar el catálogo sin editar código
+
+Abre `https://byl0ke.github.io/alantis-sport/admin.html` y modifica productos. Para guardar cambios en la web, crea un Fine-grained personal access token de GitHub restringido a este repositorio (permiso `Contents: Read and write`) y publica desde el panel. El token permanece únicamente en la memoria de esa pestaña; no lo compartas ni lo subas al repositorio.
+
+También puedes usar `Guardar borrador` y `Descargar copia JSON` sin conectar GitHub. Los cambios locales no se publican automáticamente.
