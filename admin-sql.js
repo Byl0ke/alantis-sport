@@ -41,7 +41,22 @@
     byId('sql-audit-count').textContent=sum.audit_events;
     listItems(orders.orders,'sql-orders-table',[['name','Pedido'],['created_at','Fecha'],['email','Cliente'],['total','Total'],['currency','Divisa'],['financial_status','Pago'],['fulfillment_status','Entrega']]);
     listItems(logs.logs,'sql-logs-table',[['created_at','Fecha'],['actor','Origen'],['action','Evento'],['target','Pedido / destino']]);
-    setStatus('Conectado: datos recuperados del archivo SQL cifrado del servidor.');
+    const mysqlEndpoints = [
+      ['/api/admin/customers?limit=50','sql-customers-table','customers', [['customer_id','ID'],['email','Email'],['first_name','Nombre'],['last_name','Apellidos']]],
+      ['/api/admin/products?limit=50','sql-products-real-table','products', [['product_id','ID'],['title','Producto'],['status','Estado'],['vendor','Proveedor']]],
+      ['/api/admin/sales?limit=50','sql-sales-table','sales', [['order_id','Pedido'],['gross_total','Importe'],['currency','Divisa'],['payment_status','Estado']]],
+      ['/api/admin/inventory?limit=50','sql-inventory-table','inventory', [['inventory_item_id','ID artículo'],['location_id','Almacén'],['available','Unidades']]]
+    ];
+    // SQLite antiguo puede no disponer de estos endpoints; la vista básica sigue funcionando.
+    const additional=await Promise.allSettled(mysqlEndpoints.map(async ([path,id,key,fields])=>{
+      const response=await fetch(backend+path,{headers:{Authorization:'Bearer '+token},cache:'no-store'});
+      if(!response.ok)throw Error('Endpoint MySQL no disponible');
+      const data=await response.json();listItems(data[key]||[],id,fields);
+    }));
+    const labels=['sql-customers-count','sql-products-count','sql-sales-count','sql-inventory-count'];
+    const stats=[sum.customers,sum.products,sum.sales,sum.inventory];
+    labels.forEach((id,i)=>{const node=byId(id);if(node)node.textContent=stats[i]??'—';});
+    setStatus(additional.every(x=>x.status==='fulfilled')?'Conectado: datos MySQL consultados por HTTPS.':'Conectado al backend; algunas vistas requieren la versión MySQL.');
   }
   byId('sql-connect').addEventListener('click',async()=>{
     let u;
@@ -64,8 +79,8 @@
   });
   byId('sql-disconnect').addEventListener('click',()=>{
     backend='';token='';url.value='';tokenField.value='';
-    for(const id of ['sql-orders-count','sql-webhooks-count','sql-audit-count'])byId(id).textContent='—';
-    byId('sql-orders-table').replaceChildren();byId('sql-logs-table').replaceChildren();
+    for(const id of ['sql-orders-count','sql-webhooks-count','sql-audit-count','sql-customers-count','sql-products-count','sql-sales-count','sql-inventory-count'])byId(id).textContent='—';
+    for(const id of ['sql-orders-table','sql-logs-table','sql-customers-table','sql-products-real-table','sql-sales-table','sql-inventory-table']){const node=byId(id);if(node)node.replaceChildren();}
     setStatus('Conexión cerrada y token descartado de esta pestaña.');
   });
   // Opcional: un éxito de publicación en GitHub se añade al registro cifrado si el

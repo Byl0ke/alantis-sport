@@ -102,3 +102,16 @@ Más información oficial: https://help.shopify.com/es/manual/checkout-settings/
 Se ha añadido una sección en `admin.html` para conectar un **servidor privado** y consultar pedidos, registros de eventos y descargar un `pedidos.sql.enc` cifrado. El código de backend se encuentra en `backend/`, implementa AES-256-GCM sobre exportación SQL SQLite, verifica los webhooks de Shopify con HMAC y exige token administrativo separado del PIN visual.
 
 **Estado:** los archivos están preparados, pero el servidor **no se ha desplegado** y los webhooks **no se han conectado**. GitHub Pages no guarda pedidos: no afirmar que ya se están archivando pedidos reales. Para instrucciones de despliegue, secretos y copias consulta [GUIA-REGISTROS-SQL.md](GUIA-REGISTROS-SQL.md).
+
+
+---
+
+# ALANTIS SPORT — MySQL seguro (extensión opcional)
+
+Se incorpora un backend MySQL privado en `backend/mysql/` que permite replicar pedidos, clientes, productos, inventario, ventas y auditorías desde Shopify, y consultar las tablas desde el panel existente.
+
+**Estado:** Preparado en código, NO desplegado ni vinculado a Shopify todavía. Los cobros reales siguen desactivados en la demo.
+
+Sigue **[GUIA-MYSQL.md](./GUIA-MYSQL.md)** para crear el VPS, configurar HTTPS, las claves secretas y los webhooks. No se guarda ninguna contraseña en GitHub. La API es el único intermediario autorizado entre GitHub Pages y la base de datos.
+
+El backend antiguo SQLite permanece sin cambios en `backend/main.py` y su configuración histórica `render.yaml` también, para no romper la versión anterior.

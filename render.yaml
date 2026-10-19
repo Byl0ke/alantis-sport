@@ -1,3 +1,4 @@
+# LEGACY SQLITE — no despliega MySQL. Para la version MySQL consulta GUIA-MYSQL.md y deploy/mysql/compose.yaml.
 # ALANTIS SPORT - backend privado para pedidos / eventos Shopify.
 # Este archivo contiene SOLO configuración pública, NUNCA secretos.
 # ATENCIÓN: el plan con disco es DE PAGO. Revisa el coste antes de aceptar en Render.

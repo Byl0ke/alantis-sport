@@ -14,3 +14,17 @@
 __pycache__/
 .pytest_cache/
 *.py[cod]
+
+.env
+**/.env
+**/.env.*
+!**/.env.example
+*.sql
+*.sql.enc
+*.db
+*.sqlite
+*.sqlite3
+__pycache__/
+.pytest_cache/
+*.pyc
+/backups/

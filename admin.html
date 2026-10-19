@@ -57,7 +57,7 @@
       <a class="side-link" href="#descuentos">% <span>Ofertas y cupones</span></a>
       <a class="side-link" href="#configuracion">⚙ <span>Configuración</span></a>
       <a class="side-link" href="#shopify-panel">◫ <span>Ventas Shopify</span></a>
-      <a class="side-link" href="#sql-cifrado">▣ <span>Pedidos y SQL cifrado</span></a>
+      <a class="side-link" href="#sql-cifrado">▣ <span>Pedidos y MySQL</span></a>
       <a class="side-link" href="./" target="_blank" rel="noopener noreferrer">↗ <span>Ver tienda pública</span></a>
       <button class="side-link logout-link" id="logout-side" type="button">⌁ <span>Bloquear panel</span></button>
       <a class="side-link" href="https://github.com/Byl0ke/alantis-sport" target="_blank" rel="noopener noreferrer">⌘ <span>Repositorio GitHub</span></a>
@@ -76,7 +76,7 @@
         <a href="#descuentos"><span>03 / MARKETING</span><strong>Ofertas</strong><small>Cupones, rebajas y banners</small><b aria-hidden="true">↗</b></a>
         <a href="#configuracion"><span>04 / AJUSTES</span><strong>Configuración</strong><small>Envíos y copias de seguridad</small><b aria-hidden="true">↗</b></a>
         <a href="#shopify-panel"><span>05 / VENTAS</span><strong>Shopify</strong><small>Pagos, pedidos y clientes</small><b aria-hidden="true">↗</b></a>
-        <a href="#sql-cifrado"><span>06 / ARCHIVO</span><strong>Pedidos y registros</strong><small>SQL cifrado · Backups privados</small><b aria-hidden="true">↗</b></a>
+        <a href="#sql-cifrado"><span>06 / ARCHIVO</span><strong>Pedidos y registros</strong><small>MySQL privado · Backups cifrados</small><b aria-hidden="true">↗</b></a>
         <a href="#publish-heading"><span>07 / GUARDAR</span><strong>GitHub</strong><small>Publicar los cambios</small><b aria-hidden="true">↗</b></a>
       </nav>
       <section class="summary-grid" aria-label="Resumen del catálogo">
@@ -169,20 +169,30 @@
         </div>
       </section>
 
-      <div class="section-heading" id="sql-cifrado"><div><span class="eyebrow">SEGURIDAD Y TRAZABILIDAD</span><h2>PEDIDOS Y REGISTROS · SQL CIFRADO</h2></div><p>Consulta datos reales desde tu servidor privado, sin guardarlos en GitHub Pages.</p></div>
+      <div class="section-heading" id="sql-cifrado"><div><span class="eyebrow">SEGURIDAD Y TRAZABILIDAD</span><h2>PEDIDOS Y REGISTROS · MYSQL PRIVADO</h2></div><p>Consulta datos reales desde tu servidor privado, sin guardarlos en GitHub Pages.</p></div>
       <section class="sql-panel editor-panel" aria-labelledby="sql-heading">
-        <div class="panel-heading"><div><span class="eyebrow">ALANTIS · ARCHIVO ENCRIPTADO</span><h2 id="sql-heading">pedidos.sql.enc</h2></div><span class="sql-badge">AES-256-GCM</span></div>
-        <p class="hint-block">Este panel está preparado, pero necesita desplegar el servidor <code>backend/</code>, una carpeta de datos persistente, una clave secreta y los webhooks de Shopify. <strong>El PIN visual no protege los datos.</strong> Para consultarlos se exige un token privado independiente. No pegues la clave de cifrado aquí.</p>
+        <div class="panel-heading"><div><span class="eyebrow">ALANTIS · MYSQL CON PROTECCIÓN AES-256-GCM</span><h2 id="sql-heading">MySQL · Pedidos y clientes</h2></div><span class="sql-badge">AES-256-GCM</span></div>
+        <p class="hint-block">Este panel está preparado para conectarse a un <strong>servidor MySQL privado</strong> mediante <code>backend/mysql/</code>. Necesita un alojamiento, claves secretas y webhooks de Shopify. <strong>El PIN visual no protege los datos.</strong> Para consultarlos se exige un token privado independiente. No pegues la clave de cifrado aquí.</p>
         <div class="form-grid sql-connect-grid">
           <label class="field">URL del servidor privado (HTTPS)<input id="sql-api-url" type="url" inputmode="url" autocomplete="off" placeholder="https://tu-servidor.example.com" /></label>
           <label class="field">Token administrativo del servidor<input id="sql-api-token" type="password" autocomplete="off" spellcheck="false" placeholder="Token largo generado en tu hosting" /></label>
         </div>
-        <div class="form-actions sql-actions"><button type="button" class="btn btn-gold" id="sql-connect">Conectar registros</button><button type="button" class="btn btn-light" id="sql-refresh">Actualizar datos</button><button type="button" class="btn btn-light" id="sql-backup">Descargar .sql.enc</button><button type="button" class="btn btn-dark" id="sql-disconnect">Desconectar</button></div>
+        <div class="form-actions sql-actions"><button type="button" class="btn btn-gold" id="sql-connect">Conectar registros</button><button type="button" class="btn btn-light" id="sql-refresh">Actualizar datos</button><button type="button" class="btn btn-light" id="sql-backup">Copia SQL cifrada</button><button type="button" class="btn btn-dark" id="sql-disconnect">Desconectar</button></div>
         <p id="sql-status" class="sql-status" role="status" aria-live="polite">Sin servidor privado conectado. Los registros reales todavía no se están almacenando aquí.</p>
         <div class="sql-stats"><div><span>Pedidos guardados</span><strong id="sql-orders-count">—</strong></div><div><span>Notificaciones recibidas</span><strong id="sql-webhooks-count">—</strong></div><div><span>Eventos registrados</span><strong id="sql-audit-count">—</strong></div></div>
+        <div class="sql-stats" aria-label="Datos MySQL, solo cuando se conecta un servidor">
+          <div><span>Clientes</span><strong id="sql-customers-count">—</strong></div>
+          <div><span>Productos Shopify</span><strong id="sql-products-count">—</strong></div>
+          <div><span>Ventas (resumen)</span><strong id="sql-sales-count">—</strong></div>
+          <div><span>Registros de stock</span><strong id="sql-inventory-count">—</strong></div>
+        </div>
+        <div class="sql-head"><h3>Clientes registrados en MySQL</h3><small>Solo con autenticación privada</small></div><div class="sql-table-wrap" id="sql-customers-table"><p class="sql-empty">Disponible tras conectar MySQL.</p></div>
+        <div class="sql-head"><h3>Productos de Shopify sincronizados</h3><small>Catálogo real (no el de demostración)</small></div><div class="sql-table-wrap" id="sql-products-real-table"><p class="sql-empty">Disponible tras conectar MySQL.</p></div>
+        <div class="sql-head"><h3>Resumen de ventas</h3><small>Importes de pedidos, no pagos bancarios confirmados</small></div><div class="sql-table-wrap" id="sql-sales-table"><p class="sql-empty">Disponible tras conectar MySQL.</p></div>
+        <div class="sql-head"><h3>Inventario Shopify</h3><small>Niveles recibidos por webhook</small></div><div class="sql-table-wrap" id="sql-inventory-table"><p class="sql-empty">Disponible tras conectar MySQL.</p></div>
         <div class="sql-head"><h3>Pedidos reales</h3><small>Últimos 50 · consulta autorizada</small></div><div class="sql-table-wrap" id="sql-orders-table"><p class="sql-empty">Conecta un servidor para consultar los pedidos.</p></div>
         <div class="sql-head"><h3>Registro de eventos</h3><small>Últimos 100 · notificaciones de Shopify y publicaciones autorizadas</small></div><div class="sql-table-wrap" id="sql-logs-table"><p class="sql-empty">Los eventos aparecerán cuando conectes el servidor.</p></div>
-        <p class="hint-block">Shopify es la fuente de verdad. Este archivo guarda notificaciones nuevas una vez que se configuren; <strong>no importa pedidos anteriores automáticamente</strong>. No almacenes datos personales ni claves en un repositorio público.</p>
+        <p class="hint-block">Shopify es la fuente de verdad. Esta base MySQL registra las nuevas notificaciones una vez que se configuren; <strong>no importa pedidos anteriores automáticamente</strong>. No almacenes datos personales ni claves en un repositorio público.</p>
       </section>
 
       <section class="publish-panel" aria-labelledby="publish-heading"><div class="publish-head"><span class="eyebrow">SINCRONIZACIÓN SEGURA</span><h2 id="publish-heading">Publicar cambios en <em>GitHub</em></h2><p>Los cambios no se ven en la tienda hasta publicar <code>products.json</code> y <code>store-config.json</code>. No pegues la clave en el código: introdúcela aquí solo cuando vayas a publicar.</p></div><div class="connect-grid"><label class="field">Token temporal de GitHub <input id="github-token" type="password" spellcheck="false" autocomplete="new-password" placeholder="github_pat_..." aria-describedby="token-explain" /></label><button id="check-github" class="btn btn-light" type="button">Comprobar acceso</button></div><p id="token-explain" class="hint">Crea un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Fine-grained personal access token</a> limitado a <b>Byl0ke/alantis-sport</b>, con permiso <b>Contents: Read and write</b>. La clave se guarda solo en la memoria de esta pestaña; no se almacena ni se incluye en los archivos. Cierra la pestaña para descartarla.</p><div class="publish-foot"><div class="status" id="status" role="status" aria-live="polite">Listo para editar el catálogo.</div><button class="btn btn-gold" id="publish-bottom" type="button">↑ Publicar todos los cambios</button></div></section>

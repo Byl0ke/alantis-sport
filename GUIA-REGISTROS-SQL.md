@@ -1,3 +1,5 @@
+> **SISTEMA ANTERIOR (SQLite).** Si quieres la nueva versión MySQL, consulta [GUIA-MYSQL.md](GUIA-MYSQL.md). No borres respaldos ni migres pedidos reales sin verificarlos.
+
 # ALANTIS SPORT — Registro de pedidos y eventos en SQL cifrado
 
 ## Estado actual
