@@ -23,7 +23,16 @@ const initialCart=safeGet('alantis-demo-cart',{});
 let cart=Object.fromEntries(Object.entries(initialCart).filter(([id,n])=>!!lookup[id] && Number.isSafeInteger(n) && n>0 && n<100));
 const initialWish=safeGet('alantis-demo-favs',[]);
 let favorites=new Set(Array.isArray(initialWish)?initialWish.filter(id=>!!lookup[id]):[]);
-let filter='Todos',search='',sort='featured',discountActive=false,toastTimeout=null,previousFocus=null,modalOpen=false,drawerOpen=false;
+let filter='Todos',search='',sort='featured',activeCoupon=null,toastTimeout=null,previousFocus=null,modalOpen=false,drawerOpen=false;
+let STORE_CONFIG={offersBanner:{active:true,eyebrow:'SOLO EN ALANTIS SPORT',title:'OFERTAS ESPECIALES',subtitle:'LAS MEJORES COLECCIONES, AL MEJOR ESTILO',buttonText:'EXPLORAR PRODUCTOS'},shipping:{freeFrom:60,flatRate:4.95},coupons:[]};
+async function loadStoreConfig(){try{const r=await fetch('store-config.json',{cache:'no-store'});if(!r.ok)throw Error('Sin configuración publicada');const data=await r.json();if(data&&typeof data==='object'&&Array.isArray(data.coupons)){
+STORE_CONFIG={...STORE_CONFIG,offersBanner:{...STORE_CONFIG.offersBanner,...data.offersBanner},shipping:{...STORE_CONFIG.shipping,...data.shipping},coupons:data.coupons};
+const b=STORE_CONFIG.offersBanner,section=byId('ofertas');section.hidden=b.active===false;
+section.querySelector('.eyebrow').textContent=String(b.eyebrow||'OFERTAS');byId('offers-title').textContent=String(b.title||'OFERTAS ESPECIALES');
+section.querySelector('.offers-content>p:not(.eyebrow)').textContent=String(b.subtitle||'');byId('offers-button').firstChild.textContent=String(b.buttonText||'VER PRODUCTOS')+' ';
+renderCart();}}catch(e){console.info('Usando configuración de reserva:',e.message);}}
+function todayLocal(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
+function validCoupon(code,subtotal){const coupon=STORE_CONFIG.coupons.find(c=>c.code===code&&c.active);if(!coupon)return {coupon:null,message:'Cupón no válido o desactivado.'};const today=todayLocal();if(coupon.start&&today<coupon.start)return {coupon:null,message:'Este cupón aún no está activo.'};if(coupon.end&&today>coupon.end)return {coupon:null,message:'Este cupón ha caducado.'};if(subtotal<Number(coupon.minOrder||0))return {coupon:null,message:'Compra mínima: '+EUR.format(coupon.minOrder||0)};return {coupon,message:'Cupón aplicado a la cesta de demostración.'};}
 
 function renderProducts(){
   let result=PRODUCTS.filter(p=> p.active && (filter==='Todos'||p.category===filter) && (`${p.name} ${p.category}`.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es'))));
@@ -33,7 +42,7 @@ function renderProducts(){
   if(sort==='name')result=result.sort((a,b)=>a.name.localeCompare(b.name,'es'));
   const grid=byId('product-grid');
   grid.innerHTML=result.map((p)=>{const soldOut=p.stock===0;return `<article class="product-card">
-    <div class="product-image-wrap"><img class="product-image" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" width="450" height="456"/>${soldOut?'<span class="stock-pill">AGOTADO</span>':''}</div>
+    <div class="product-image-wrap"><img class="product-image" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" width="450" height="456"/>${soldOut?'<span class="stock-pill">AGOTADO</span>':p.oldPrice>p.price?`<span class="sale-pill">−${Math.round(100*(1-p.price/p.oldPrice))}%</span>`:''}</div>
     <button type="button" class="heart-btn ${favorites.has(p.id)?'active':''}" data-favorite="${escapeHtml(p.id)}" aria-label="${favorites.has(p.id)?'Quitar de':'Añadir a'} favoritos: ${escapeHtml(p.name)}" aria-pressed="${favorites.has(p.id)}"><svg class="icon"><use href="#i-heart"/></svg></button>
     <div class="product-info"><div class="product-category">${escapeHtml(p.category)}</div><h3 class="product-name">${escapeHtml(p.name)}</h3><div class="rating" aria-label="Valoración ilustrativa: ${p.rating} de 5"><span class="rating-stars" aria-hidden="true">★★★★★</span><span>(${p.reviews})</span></div><div class="product-price">${EUR.format(p.price)}${p.oldPrice?` <del>${EUR.format(p.oldPrice)}</del>`:''}</div><button type="button" data-add="${escapeHtml(p.id)}" class="btn btn-gold buy-btn" ${soldOut?'disabled':''}><svg class="icon"><use href="#i-cart"/></svg>${soldOut?'SIN EXISTENCIAS':'AÑADIR AL CARRITO'}</button></div>
   </article>`;}).join('');
@@ -52,10 +61,13 @@ function renderCart(){
   byId('cart-count').textContent=units;byId('cart-title-count').textContent=`(${units})`;
   byId('cart-items').innerHTML=items.length?items.map(([id,q])=>{const p=lookup[id];return `<div class="cart-line"><img src="${escapeHtml(p.image)}" alt=""/><div><strong>${escapeHtml(p.name)}</strong><small>${EUR.format(p.price)}</small><div class="quantity-control"><button type="button" data-qty="${id}" data-delta="-1" aria-label="Reducir cantidad de ${escapeHtml(p.name)}">−</button><span>${q}</span><button type="button" data-qty="${id}" data-delta="1" aria-label="Aumentar cantidad de ${escapeHtml(p.name)}">+</button></div></div><button class="remove-line" type="button" data-remove="${id}">Quitar</button></div>`;}).join(''):`<div class="empty-cart"><svg class="icon"><use href="#i-cart"/></svg><h3>¡TU CARRITO TE ESPERA!</h3><p>Añade tus productos favoritos<br/>y empieza a superarte.</p></div>`;
   const subtotal=items.reduce((sum,[id,q])=>sum+lookup[id].price*q,0);
-  const discount=discountActive?Math.round(subtotal*10)/100:0;
-  const shipping=items.length?(subtotal-discount>=60?0:4.95):0;
+  const result=activeCoupon?validCoupon(activeCoupon,subtotal):{coupon:null};
+  const coupon=result.coupon;
+  const discount=coupon?(coupon.type==='fixed'?Math.min(subtotal,Number(coupon.value)):Math.round(subtotal*Number(coupon.value))/100):0;
+  const threshold=Number(STORE_CONFIG.shipping.freeFrom),flat=Number(STORE_CONFIG.shipping.flatRate);
+  const shipping=items.length?(subtotal-discount>=threshold?0:flat):0;
   byId('cart-subtotal').textContent=EUR.format(subtotal);
-  byId('discount-row').hidden=!discountActive||!items.length;
+  byId('discount-row').hidden=!coupon||!items.length;
   byId('cart-discount').textContent=`−${EUR.format(discount)}`;
   byId('cart-shipping').textContent=items.length&&shipping===0?'GRATIS*':EUR.format(shipping);
   byId('cart-total').textContent=EUR.format(subtotal-discount+shipping);
@@ -99,7 +111,7 @@ byId('continue-shopping').addEventListener('click',closeCart);
 byId('screen-overlay').addEventListener('click',()=>{if(drawerOpen)closeCart();if(modalOpen)closeModal();});
 byId('account-btn').addEventListener('click',()=>openModal('MI CUENTA','La creación de cuentas se activará cuando conectemos una plataforma de comercio electrónico (Shopify, WooCommerce o un sistema de pedidos).'));
 byId('checkout-btn').addEventListener('click',()=>openModal('PAGO PENDIENTE DE ACTIVAR','Tu carrito funciona en modo demostración, pero todavía no procesa compras reales. Para recibir pedidos y pagos hay que vincular una plataforma ecommerce y configurar métodos de pago, impuestos, envíos y datos legales.'));
-byId('apply-promo').addEventListener('click',()=>{const code=byId('promo-code').value.trim().toUpperCase();if(code==='ALANTIS10'){discountActive=true;byId('promo-message').textContent='10% aplicado a tu carrito de demostración.';showToast('Descuento demo del 10% aplicado');}else{discountActive=false;byId('promo-message').textContent='Código no válido. Prueba ALANTIS10 (demo).';}renderCart();});
+byId('apply-promo').addEventListener('click',()=>{const code=byId('promo-code').value.trim().toUpperCase();const subtotal=Object.entries(cart).reduce((sum,[id,q])=>sum+(lookup[id]?.price||0)*q,0);const result=validCoupon(code,subtotal);activeCoupon=result.coupon?code:null;byId('promo-message').textContent=result.message;if(activeCoupon)showToast('Cupón aplicado (demostración)');renderCart();});
 byId('newsletter-form').addEventListener('submit',(event)=>{event.preventDefault();openModal('SUSCRIPCIÓN EN PREPARACIÓN','El formulario tiene diseño y validación, pero todavía no almacena tu email ni envía mensajes. Para activar suscripciones reales, conecta Mailchimp, Shopify Email u otra herramienta autorizada.');});
 byId('modal-close').addEventListener('click',closeModal);
 byId('modal-ok').addEventListener('click',closeModal);
@@ -109,3 +121,4 @@ document.addEventListener('keydown',(event)=>{if(event.key==='Escape'){if(drawer
 byId('current-year').textContent=String(new Date().getFullYear());
 renderProducts();renderCart();
 loadCatalog();
+loadStoreConfig();

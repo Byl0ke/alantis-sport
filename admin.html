@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080808" />
   <meta name="robots" content="noindex, nofollow" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: blob: data:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
-  <title>Panel de catálogo | ALANTIS SPORT</title>
+  <title>ALANTIS SPORT | Centro de administración</title>
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,30 +18,41 @@
     <aside class="side" aria-label="Navegación del panel">
       <a class="brand" href="./" aria-label="Volver a ALANTIS SPORT"><img src="assets/emblema.png" alt="" /><span><strong>ALANTIS</strong><small>SPORT · ADMIN</small></span></a>
       <div class="side-label">PANEL DE CONTROL</div>
-      <a class="side-link active" href="#productos">▦ <span>Catálogo de productos</span></a>
+      <a class="side-link active" href="#resumen">◈ <span>Resumen</span></a>
+      <a class="side-link" href="#productos">▦ <span>Productos</span></a>
+      <a class="side-link" href="#inventario">▤ <span>Inventario</span></a>
+      <a class="side-link" href="#descuentos">% <span>Ofertas y cupones</span></a>
+      <a class="side-link" href="#configuracion">⚙ <span>Configuración</span></a>
       <a class="side-link" href="./" target="_blank" rel="noopener noreferrer">↗ <span>Ver tienda pública</span></a>
       <a class="side-link" href="https://github.com/Byl0ke/alantis-sport" target="_blank" rel="noopener noreferrer">⌘ <span>Repositorio GitHub</span></a>
-      <div class="side-help"><span class="help-spark">✦</span><strong>Tu marca. Tu catálogo.</strong><p>Edita tus artículos sin tocar el código. Para publicar online necesitarás autorizar GitHub.</p></div>
-      <div class="side-bottom">ALANTIS SPORT <span>v1.1 · Catálogo demo</span></div>
+      <div class="side-help"><span class="help-spark">✦</span><strong>Control total del escaparate.</strong><p>Gestiona precios, ofertas, stock y contenido desde un mismo lugar. GitHub confirma cada publicación.</p></div>
+      <div class="side-bottom">ALANTIS SPORT <span>v2.0 · Tienda demo</span></div>
     </aside>
 
-    <main class="workspace" id="productos">
-      <header class="topbar"><div><span class="eyebrow">ALANTIS SPORT / ECOMMERCE</span><h1>Panel de <em>productos</em></h1><p>Organiza tu colección y actualiza la tienda.</p></div><div class="top-actions"><a class="btn btn-light" href="./" target="_blank" rel="noopener noreferrer">↗ Ver tienda</a><button id="publish-top" class="btn btn-gold" type="button">↑ Publicar en GitHub</button></div></header>
+    <main class="workspace" id="resumen">
+      <header class="topbar"><div><span class="eyebrow">ALANTIS SPORT / ECOMMERCE</span><h1>Centro de <em>administración</em></h1><p>Gestiona productos, promociones, stock y aspecto de la tienda.</p></div><div class="top-actions"><a class="btn btn-light" href="./" target="_blank" rel="noopener noreferrer">↗ Ver tienda</a><button id="publish-top" class="btn btn-gold" type="button">↑ Publicar en GitHub</button></div></header>
 
-      <div class="notice" role="note"><span>ℹ</span><div><strong>Catálogo de demostración.</strong> El stock no descuenta compras reales y la web todavía no cobra ni procesa pedidos. Este panel es público, pero <strong>solo quien tenga autorización de escritura en GitHub</strong> puede publicar cambios. Nunca compartas tu token.</div></div>
+      <div class="notice" role="note"><span>ℹ</span><div><strong>Catálogo de demostración.</strong> No existen ventas ni pedidos reales: las estadísticas son solo del catálogo y el stock no se descuenta automáticamente. Este panel es público, pero <strong>solo quien tenga autorización de escritura en GitHub</strong> puede publicar cambios. Nunca compartas tu token.</div></div>
 
       <section class="summary-grid" aria-label="Resumen del catálogo">
         <div class="stat"><span>PRODUCTOS</span><strong id="stat-total">—</strong><small>En tu catálogo</small></div>
         <div class="stat"><span>VISIBLES</span><strong id="stat-visible">—</strong><small>En la tienda</small></div>
         <div class="stat"><span>AGOTADOS</span><strong id="stat-empty">—</strong><small>Stock de demostración</small></div>
+        <div class="stat"><span>EN OFERTA</span><strong id="stat-offers">—</strong><small>Precios rebajados</small></div>
+        <div class="stat"><span>STOCK BAJO</span><strong id="stat-low">—</strong><small id="stock-threshold-label">5 unidades o menos</small></div>
+        <div class="stat"><span>VALOR DE INVENTARIO</span><strong id="stat-inventory">—</strong><small>Estimación · no son ventas</small></div>
         <div class="stat"><span>ESTADO</span><strong id="stat-state" class="stat-state">Cargando…</strong><small id="stat-state-info">Leyendo catálogo</small></div>
       </section>
 
+      <div class="section-heading" id="productos"><div><span class="eyebrow">TU TIENDA</span><h2>GESTIÓN DE PRODUCTOS</h2></div><p>Selecciona, filtra, edita o aplica cambios a varios artículos.</p></div>
       <div class="content-grid">
         <section class="catalog-panel" aria-labelledby="list-heading"><div class="panel-heading"><div><span class="eyebrow">GESTIÓN</span><h2 id="list-heading">Mis productos <span class="count" id="products-count">0</span></h2></div><button class="btn btn-gold btn-small" id="add-product" type="button">+ Añadir</button></div>
-          <label class="search-wrap"><span class="sr-only">Buscar producto</span><span aria-hidden="true">⌕</span><input id="admin-search" type="search" autocomplete="off" placeholder="Buscar por nombre, categoría..." /></label>
+          <label class="search-wrap"><span class="sr-only">Buscar producto</span><span aria-hidden="true">⌕</span><input id="admin-search" type="search" autocomplete="off" placeholder="Nombre, ID, categoría o SKU..." /></label>
+          <div class="filter-bar"><label><span class="sr-only">Filtrar categoría</span><select id="admin-category"><option value="Todos">Todas las categorías</option><option>Ropa deportiva</option><option>Calzado</option><option>Equipamiento</option><option>Vitaminas</option><option>Accesorios</option></select></label><label><span class="sr-only">Filtrar estado</span><select id="admin-status"><option value="todos">Todos</option><option value="visible">Visibles</option><option value="oculto">Ocultos</option><option value="low">Stock bajo</option><option value="agotado">Agotados</option><option value="oferta">En oferta</option></select></label></div>
+          <div class="bulkbar" id="inventario"><label class="select-all"><input id="select-all" type="checkbox" /> Seleccionar visibles</label><strong id="selected-count">0 seleccionados</strong></div>
+          <div class="bulk-actions"><select id="bulk-action" aria-label="Acción para productos seleccionados"><option value="">Acciones en lote...</option><option value="show">Mostrar seleccionados</option><option value="hide">Ocultar seleccionados</option><option value="feature">Destacar seleccionados</option><option value="unfeature">Quitar destacados</option><option value="discount">Aplicar descuento %</option><option value="clear-discount">Quitar ofertas</option><option value="delete">Eliminar seleccionados</option></select><button type="button" class="btn btn-light btn-small" id="apply-bulk">Aplicar</button></div>
           <div id="product-list" class="product-list" aria-label="Seleccionar producto"></div>
-          <div class="catalog-footer"><button id="download-json" class="text-button" type="button">↓ Descargar copia JSON</button><button id="restore-draft" class="text-button" type="button">↺ Recuperar borrador</button></div>
+          <div class="catalog-footer"><button id="download-json" class="text-button" type="button">↓ Descargar JSON</button><button id="download-csv" class="text-button" type="button">↓ Exportar CSV</button><label class="text-button file-import" for="import-json">↑ Importar JSON</label><input id="import-json" type="file" accept="application/json,.json" hidden /><button id="restore-draft" class="text-button" type="button">↺ Recuperar borrador</button></div>
         </section>
 
         <section class="editor-panel" aria-labelledby="editor-heading"><div class="editor-head"><div><span class="eyebrow" id="editor-kicker">EDITAR ARTÍCULO</span><h2 id="editor-heading">Detalles del producto</h2></div><span id="dirty-pill" class="dirty-pill" hidden>● Sin publicar</span></div>
@@ -50,10 +61,11 @@
             <div class="form-grid">
               <label class="field span-2">Nombre del producto <input id="field-name" maxlength="90" required placeholder="Ej.: Camiseta ALANTIS PRO" /></label>
               <label class="field">Categoría <select id="field-category"><option>Ropa deportiva</option><option>Calzado</option><option>Equipamiento</option><option>Vitaminas</option><option>Accesorios</option></select></label>
+              <label class="field">SKU / referencia <input id="field-sku" maxlength="40" placeholder="ALT-ROPA-001" /></label>
               <label class="field">Precio (€) <input id="field-price" type="number" min="0" max="999999" step="0.01" required placeholder="24.99" /></label>
-              <label class="field">Precio anterior (€) <input id="field-oldprice" type="number" min="0" max="999999" step="0.01" placeholder="Opcional" /></label>
+              <label class="field">Precio anterior / tachado (€) <input id="field-oldprice" type="number" min="0" max="999999" step="0.01" placeholder="Opcional" /></label>
               <label class="field">Unidades en stock <input id="field-stock" type="number" min="0" max="999999" step="1" required /></label>
-              <label class="field span-2">Descripción <textarea id="field-description" maxlength="400" rows="3" placeholder="Materiales, tallas, características... (máx. 400 caracteres)"></textarea></label>
+              <div class="sale-tip span-2" id="sale-tip">Para mostrar una oferta, indica un precio anterior superior al precio actual.</div><label class="field span-2">Descripción <textarea id="field-description" maxlength="400" rows="3" placeholder="Materiales, tallas, características... (máx. 400 caracteres)"></textarea></label>
               <label class="field span-2">URL de imagen (HTTPS o ruta assets/) <input id="field-image" placeholder="assets/mi-producto.webp" /></label>
               <label class="field image-upload span-2">O subir una fotografía nueva (PNG, JPG, WebP) <input id="field-photo" type="file" accept="image/png,image/jpeg,image/webp" /><span id="file-hint">Se optimizará a formato WebP al publicar.</span></label>
             </div>
@@ -63,7 +75,37 @@
         </section>
       </div>
 
-      <section class="publish-panel" aria-labelledby="publish-heading"><div class="publish-head"><span class="eyebrow">SINCRONIZACIÓN SEGURA</span><h2 id="publish-heading">Publicar cambios en <em>GitHub</em></h2><p>Los cambios del panel no se ven en tu tienda hasta que publiques <code>products.json</code>. No pegues la clave en el código: introdúcela aquí solo cuando vayas a publicar.</p></div><div class="connect-grid"><label class="field">Token temporal de GitHub <input id="github-token" type="password" spellcheck="false" autocomplete="new-password" placeholder="github_pat_..." aria-describedby="token-explain" /></label><button id="check-github" class="btn btn-light" type="button">Comprobar acceso</button></div><p id="token-explain" class="hint">Crea un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Fine-grained personal access token</a> limitado a <b>Byl0ke/alantis-sport</b>, con permiso <b>Contents: Read and write</b>. La clave se guarda solo en la memoria de esta pestaña; no se almacena ni se incluye en los archivos. Cierra la pestaña para descartarla.</p><div class="publish-foot"><div class="status" id="status" role="status" aria-live="polite">Listo para editar el catálogo.</div><button class="btn btn-gold" id="publish-bottom" type="button">↑ Guardar y publicar catálogo</button></div></section>
+      <div class="section-heading" id="descuentos"><div><span class="eyebrow">MARKETING</span><h2>OFERTAS Y CUPONES</h2></div><p>Configura descuentos de la tienda de demostración.</p></div>
+      <section class="marketing-grid">
+        <div class="catalog-panel"><div class="panel-heading"><div><span class="eyebrow">PROMOCIONES</span><h2>Códigos de descuento</h2></div><button id="add-coupon" class="btn btn-gold btn-small" type="button">+ Nuevo cupón</button></div>
+          <div class="coupon-list" id="coupon-list"></div>
+          <form id="coupon-form" class="marketing-form" autocomplete="off"><input type="hidden" id="coupon-original" />
+            <div class="form-grid">
+              <label class="field">Código <input id="coupon-code" maxlength="24" placeholder="ALANTIS15" required pattern="[A-Za-z0-9_-]{3,24}" /></label>
+              <label class="field">Tipo <select id="coupon-type"><option value="percent">Porcentaje (%)</option><option value="fixed">Importe fijo (€)</option></select></label>
+              <label class="field">Valor del descuento <input id="coupon-value" type="number" min="0.01" max="99999" step="0.01" required /></label>
+              <label class="field">Pedido mínimo (€) <input id="coupon-min" type="number" min="0" max="999999" step="0.01" value="0" required /></label>
+              <label class="field">Inicio (opcional) <input id="coupon-start" type="date" /></label>
+              <label class="field">Fin (opcional) <input id="coupon-end" type="date" /></label>
+            </div>
+            <label class="checkline"><input id="coupon-active" type="checkbox" checked /> Cupón habilitado</label>
+            <div class="form-actions"><button class="btn btn-gold" type="submit">Guardar cupón</button><button id="delete-coupon" class="btn btn-delete" type="button">Eliminar cupón</button></div>
+          </form>
+        </div>
+        <div class="editor-panel"><div class="panel-heading"><div><span class="eyebrow">ESCAPARATE</span><h2>Banner de ofertas</h2></div></div>
+          <div class="marketing-form"><label class="checkline"><input id="banner-active" type="checkbox" checked /> Mostrar sección de ofertas</label>
+            <div class="form-grid"><label class="field span-2">Texto pequeño <input id="banner-eyebrow" maxlength="50" /></label>
+              <label class="field span-2">Titular <input id="banner-title" maxlength="65" /></label>
+              <label class="field span-2">Descripción <input id="banner-subtitle" maxlength="130" /></label>
+              <label class="field span-2">Texto del botón <input id="banner-button" maxlength="45" /></label></div>
+            <p class="hint-block">Los cambios de este banner y de los cupones se guardan en <code>store-config.json</code> al publicar. Los códigos son públicos y solo sirven para el carrito de demostración.</p>
+          </div></div>
+      </section>
+      <div class="section-heading" id="configuracion"><div><span class="eyebrow">AJUSTES</span><h2>CONFIGURACIÓN Y COPIAS</h2></div></div>
+      <section class="settings-grid"><div class="editor-panel marketing-form"><h3>Envíos de demostración</h3><div class="form-grid"><label class="field">Envío gratis desde (€) <input id="setting-free-shipping" type="number" min="0" max="999999" step="0.01" /></label><label class="field">Envío estándar (€) <input id="setting-shipping-fee" type="number" min="0" max="999999" step="0.01" /></label><label class="field">Aviso de stock bajo (unidades) <input id="setting-stock-warning" type="number" min="0" max="999999" step="1" /></label></div></div>
+      <div class="editor-panel marketing-form"><h3>Seguridad y respaldos</h3><p class="hint-block">Guarda una copia con productos y promociones, o recupera una anterior. La importación modifica el borrador, no GitHub, hasta que pulses publicar.</p><div class="form-actions"><button id="export-all" class="btn btn-light" type="button">↓ Descargar copia completa</button><label for="import-all" class="btn btn-dark file-import">↑ Importar copia</label><input id="import-all" type="file" accept="application/json,.json" hidden /></div></div></section>
+      <section class="publish-panel" aria-labelledby="publish-heading"><div class="publish-head"><span class="eyebrow">SINCRONIZACIÓN SEGURA</span><h2 id="publish-heading">Publicar cambios en <em>GitHub</em></h2><p>Los cambios no se ven en la tienda hasta publicar <code>products.json</code> y <code>store-config.json</code>. No pegues la clave en el código: introdúcela aquí solo cuando vayas a publicar.</p></div><div class="connect-grid"><label class="field">Token temporal de GitHub <input id="github-token" type="password" spellcheck="false" autocomplete="new-password" placeholder="github_pat_..." aria-describedby="token-explain" /></label><button id="check-github" class="btn btn-light" type="button">Comprobar acceso</button></div><p id="token-explain" class="hint">Crea un <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Fine-grained personal access token</a> limitado a <b>Byl0ke/alantis-sport</b>, con permiso <b>Contents: Read and write</b>. La clave se guarda solo en la memoria de esta pestaña; no se almacena ni se incluye en los archivos. Cierra la pestaña para descartarla.</p><div class="publish-foot"><div class="status" id="status" role="status" aria-live="polite">Listo para editar el catálogo.</div><button class="btn btn-gold" id="publish-bottom" type="button">↑ Publicar todos los cambios</button></div></section>
+
       <footer class="bottom-copy">© <span id="year"></span> ALANTIS SPORT · Editor estático para GitHub Pages · <a href="./">Volver a la tienda</a></footer>
     </main>
   </div>

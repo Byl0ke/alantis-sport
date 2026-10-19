@@ -1,0 +1,25 @@
+{
+  "offersBanner": {
+    "active": true,
+    "eyebrow": "SOLO EN ALANTIS SPORT",
+    "title": "OFERTAS ESPECIALES",
+    "subtitle": "LAS MEJORES COLECCIONES, AL MEJOR ESTILO",
+    "buttonText": "EXPLORAR PRODUCTOS"
+  },
+  "shipping": {
+    "freeFrom": 60,
+    "flatRate": 4.95
+  },
+  "stockWarning": 5,
+  "coupons": [
+    {
+      "code": "ALANTIS10",
+      "type": "percent",
+      "value": 10,
+      "minOrder": 0,
+      "active": true,
+      "start": "",
+      "end": ""
+    }
+  ]
+}

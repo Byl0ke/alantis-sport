@@ -15,23 +15,43 @@ Proyecto de tienda deportiva inspirado en el diseño de referencia negro y dorad
 - Banner principal, colecciones, catálogo ilustrado, promociones y pie de página.
 - Filtros por categorías, buscador y ordenación.
 - Productos editables con precios en euros, botón de compra y favoritos.
-- Carrito con cantidades, eliminación, cálculo de envío **ilustrativo** y cupón de ejemplo `ALANTIS10`.
+- Carrito con cantidades, eliminación, envío **ilustrativo** configurable y cupones definidos en `store-config.json`.
 - Carrito y favoritos se recuerdan en este navegador mediante `localStorage`.
 - Ventanas informativas y formulario visual de newsletter (sin recogida de datos).
 
-## Panel de administración de catálogo
+## Centro de administración (v2)
 
-Una vez publicada en GitHub Pages, abre **https://byl0ke.github.io/alantis-sport/admin.html**.
+Abre **https://byl0ke.github.io/alantis-sport/admin.html** una vez desplegada la web.
 
-- Cambia nombre, precio, precio anterior, categoría, descripción, unidades, imagen, visibilidad y destacado.
-- Añade, duplica o elimina artículos. El editor muestra una vista previa.
-- **Guardar borrador:** conserva una copia local en ese navegador, sin cambiar la web. Puedes descargar una copia `products.json`.
-- **Publicar en GitHub:** necesitarás crear un token temporal de GitHub, seleccionar **solo** `Byl0ke/alantis-sport` y asignar **Contents: Read and write**. Pégalo en el panel, comprueba el acceso y pulsa Publicar. El token solo reside en la memoria de la pestaña (no se guarda en localStorage ni en el repositorio). Cierra la pestaña al terminar y revoca el token cuando ya no sea necesario.
-- Al publicar, el panel actualiza `products.json` en la rama `main`. Si has seleccionado una fotografía local, se optimiza y se sube al repositorio en `assets/catalog/`. El despliegue de Pages suele tardar un poco en reflejar el cambio.
+### Productos e inventario
+
+- Añadir, duplicar, editar, ocultar y eliminar productos. Editar precio, precio anterior, SKU, categoría, descripción, stock, fotografía y destacados.
+- Buscar y filtrar por categoría, visibilidad, stock bajo, productos agotados y ofertas.
+- Selección múltiple para mostrar/ocultar, destacar, aplicar rebajas porcentuales, quitar ofertas y borrar varios productos a la vez.
+- Estadísticas **solo del catálogo**: artículos, productos visibles, agotados, rebajados, stock bajo y valor aproximado del inventario a precio de venta. **No representan ventas ni ingresos.**
+- Exportar el inventario en CSV, descargar `products.json` e importar copias validadas.
+
+### Ofertas y marketing
+
+- Crear, editar, desactivar y eliminar códigos de descuento con valor fijo o porcentual, compra mínima y fechas de vigencia.
+- Editar el banner promocional (título, subtítulo, CTA, mostrar u ocultar).
+- Cambiar umbral de envío gratis, tarifa de envío y aviso de stock bajo.
+- Los cambios del panel se guardan en `products.json` y `store-config.json`; la tienda lee ambos.
+- **Estos cupones son solo de demostración y su definición es pública**. Para cobrar pedidos reales, los descuentos se deben validar en un backend/plataforma de pagos.
+
+### Guardar, restaurar y publicar
+
+1. Puedes pulsar **Guardar borrador** (datos locales del navegador), descargar un JSON completo con productos y promociones, o importar una copia para recuperar contenido.
+2. Para publicar en GitHub, crea un **Fine-grained personal access token** limitado solo a `Byl0ke/alantis-sport`, permiso **Contents: Read and write**. Nunca lo copies en archivos de la tienda.
+3. Introduce el token en el panel y pulsa **Comprobar acceso** y luego **Publicar todos los cambios**. GitHub recibe commits para `products.json`, `store-config.json` y cualquier foto nueva.
+4. El token permanece en memoria de la pestaña y se descarta al cerrarla. **Revócalo cuando ya no lo necesites.**
+5. La publicación de productos y configuración requiere **dos commits consecutivos**. Si falla el segundo, el panel avisará de publicación parcial: revisa GitHub antes de reintentar.
+
+Las fotografías locales seleccionadas y todavía no publicadas no se incluyen en el borrador JSON. Exporta también tus fotos originales si necesitas mantener una copia.
 
 > **Seguridad importante:** `admin.html` es una página pública y **no dispone de un acceso privado**. La protección de los cambios la proporciona GitHub y el permiso del token. No compartas el token ni lo guardes en la web. Para un sistema con usuarios y contraseñas hace falta un servicio autenticado o una plataforma ecommerce.
 
-El catálogo usado por la tienda se carga de `products.json`; si se abre localmente sin servidor, usa un catálogo de reserva definido en `app.js`. No cambies manualmente el array de reserva para publicar productos.
+El catálogo usado por la tienda se carga de `products.json` y las promociones de `store-config.json`; si se abre localmente sin servidor, usa un catálogo de reserva definido en `app.js`. No cambies manualmente el array de reserva para publicar productos.
 
 Los productos, reseñas, precios, ofertas y existencias actuales son **datos ilustrativos**. El stock no se descuenta en compras: la tienda no tiene checkout real.
 

@@ -10,3 +10,5 @@
 
 /* Catálogo dinámico */
 .stock-pill{position:absolute;left:10px;top:10px;background:#171717;color:#fff;border-radius:4px;font-size:11px;font-weight:800;letter-spacing:.08em;padding:8px 12px;z-index:2}.product-price del{color:#868686;font-size:.73em;margin-left:7px;font-weight:500}.buy-btn:disabled{background:#555!important;color:#ddd!important;cursor:not-allowed}
+/* Descuentos gestionados desde el panel admin */
+.offers[hidden]{display:none!important}.sale-pill{position:absolute;left:15px;top:15px;padding:8px 11px;background:linear-gradient(130deg,#e6bd67,#b57a22);color:#171109;border-radius:3px;font-size:12px;font-weight:900;letter-spacing:.6px;z-index:2}
