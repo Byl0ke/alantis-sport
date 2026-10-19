@@ -15,3 +15,57 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}.summary-grid{grid-template-
 .shopify-links .btn{font-size:12px}
 .shopify-switch{margin:18px 0}
 @media(max-width:780px){.shopify-bridge{padding:17px}.shopify-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.shopify-links .btn{font-size:11px;white-space:normal}}
+
+
+/* PANEL UNIFICADO + PANTALLA DE ACCESO VISUAL ALANTIS SPORT */
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+.admin-gate{min-height:100dvh;display:grid;place-items:center;position:relative;isolation:isolate;overflow:hidden;padding:38px 20px;background:radial-gradient(ellipse at 52% -4%,#5b411c52,transparent 42%),linear-gradient(150deg,#080808,#0c0b09 60%,#020202)}
+.gate-glow{position:absolute;z-index:-1;top:-14%;left:-17%;width:65vw;height:65vw;max-width:850px;max-height:850px;background:radial-gradient(circle,#a5742742,transparent 63%);filter:blur(30px)}
+.gate-layout{width:min(540px,100%);margin:auto}
+.gate-brand{display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:26px}
+.gate-brand img{object-fit:contain;filter:drop-shadow(0 5px 18px #d4a84d55);border-radius:16px}
+.gate-brand h1{font:900 clamp(36px,9vw,50px)/1 Barlow Condensed,Arial,sans-serif;letter-spacing:2px;margin:8px 0}
+.gate-brand h1 em{font-style:normal;color:var(--gold)}
+.gate-eyebrow{font-size:10px;letter-spacing:2px;color:var(--gold2);font-weight:800}
+.gate-brand p{font-size:9px;letter-spacing:2.3px;color:#9e9482;font-weight:800;margin:0}
+.gate-card{border:1px solid #6c552d;background:linear-gradient(156deg,#211b12 0%,#11100e 24%,#101010 75%);border-radius:20px;padding:clamp(24px,6vw,40px);box-shadow:0 30px 100px #000a,0 0 32px #b8903217}
+.gate-lock{font-size:32px;color:var(--gold);border:1px solid #66502b;background:#241c11;border-radius:14px;width:60px;height:60px;display:grid;place-items:center;margin-bottom:23px}
+.gate-card h2{font:900 34px/1.2 Barlow Condensed,sans-serif;text-transform:uppercase;margin:10px 0}
+.gate-card>p{color:#b5afa1;line-height:1.7;margin-bottom:27px}
+#pin-form>label{font-size:11px;color:var(--gold2);letter-spacing:1.1px;font-weight:800}
+.pin-entry{display:flex;align-items:center;border:1px solid #826332;background:#070707;border-radius:9px;margin:10px 0 18px;overflow:hidden}
+.pin-entry:focus-within{box-shadow:0 0 0 3px #d9aa563a}
+.pin-entry input{font-size:24px;letter-spacing:17px;flex:1;min-width:0;color:white;outline:0;border:0;background:transparent;padding:17px 18px;text-align:center}
+.pin-entry input::placeholder{color:#6e6047;letter-spacing:8px}
+.pin-entry button{align-self:stretch;background:#211b14;color:#f7d690;border:0;border-left:1px solid #433723;padding:0 13px;font-size:11px;font-weight:800}
+.pin-pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:15px}
+.pin-pad button{min-height:49px;background:#191816;color:#eee;border:1px solid #4b412e;border-radius:9px;font-size:21px;font-weight:700}
+.pin-pad button:hover,.pin-pad button:focus-visible{background:#312516;border-color:var(--gold);color:var(--gold2)}
+.gate-submit{width:100%;font-size:12px;letter-spacing:1.4px;min-height:50px;justify-content:space-between}
+.pin-message{min-height:19px;font-size:12px;color:var(--gold);margin:9px 0 0}
+.pin-message.error{color:#ffaaa0}
+.gate-disclaimer{border-top:1px solid #343025;padding-top:18px;color:#998f7c;font-size:10px;line-height:1.65;margin:6px 0 0}
+.gate-return{display:block;margin-top:20px;text-align:center;color:var(--gold2);font-size:12px}
+.gate-features{display:flex;justify-content:center;flex-wrap:wrap;gap:9px 20px;color:#c3a96e;font-size:10px;letter-spacing:.5px;margin-top:27px}
+.btn-outline-gold{background:transparent;border-color:#75603c;color:var(--gold2)}
+.btn-outline-gold:hover{background:#282014}
+button.side-link{width:100%;background:transparent;border:0;text-align:left;font-family:inherit;font-size:inherit}
+button.side-link:hover{background:#252018}
+.admin-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:22px 0 28px}
+.admin-shortcuts a{position:relative;display:flex;flex-direction:column;gap:7px;border:1px solid #3b3426;background:linear-gradient(135deg,#221c13,#141414 75%);padding:19px;border-radius:11px;min-height:126px;transition:transform .2s,border-color .2s}
+.admin-shortcuts a:hover{transform:translateY(-2px);border-color:var(--gold)}
+.admin-shortcuts a>span{color:var(--gold);font-weight:800;letter-spacing:1.7px;font-size:9px}
+.admin-shortcuts strong{font:800 25px Barlow Condensed,Arial,sans-serif;text-transform:uppercase}
+.admin-shortcuts small{color:#a6a19a;line-height:1.5;font-size:10px}
+.admin-shortcuts b{position:absolute;right:18px;top:16px;color:var(--gold);font-size:17px}
+@media(max-width:1000px){.admin-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.gate-brand img{width:66px;height:66px}.gate-brand{justify-content:flex-start}.gate-brand p{font-size:8px}.admin-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.admin-shortcuts a{padding:13px;min-height:115px}.admin-shortcuts strong{font-size:21px}.top-actions .btn-outline-gold{width:100%}}
+@media(max-width:380px){.admin-shortcuts{grid-template-columns:1fr}.gate-brand h1{font-size:32px}.pin-entry input{letter-spacing:10px}}
+/* Evitar que los contenidos del login fuerzen una columna más ancha que el móvil. */
+.admin-gate{grid-template-columns:minmax(0,1fr)}
+.gate-layout,.gate-card,.gate-brand>div{min-width:0;max-width:100%}
+.gate-brand h1{overflow-wrap:break-word}
+@media(max-width:600px){.admin-gate{padding:28px 16px}.gate-brand{gap:10px}.gate-brand h1{font-size:clamp(29px,8vw,35px);letter-spacing:.5px}.gate-brand p{letter-spacing:1px;line-height:1.5}.gate-brand img{flex:0 0 59px;width:59px;height:59px}.gate-card{padding:22px}.pin-entry input{letter-spacing:8px;padding:14px 8px}.pin-entry button{padding:0 9px}.admin-unlocked{overflow-x:clip}}
+
+html{overflow-x:clip}body{overflow-x:clip}

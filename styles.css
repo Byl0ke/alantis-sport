@@ -15,3 +15,5 @@
 
 /* Pago gestionado por Shopify; total local siempre orientativo */
 .checkout-info{padding:10px 12px;border:1px solid rgba(219,175,86,.4);border-radius:9px;color:#d7be8e;background:#16120b;font-size:12px;line-height:1.5;margin:8px 0 12px}
+
+.admin-access-link{display:inline-block;margin-left:12px;color:#d5a94f;font-size:.8em;text-decoration:underline;text-underline-offset:3px}.admin-access-link:hover{color:#ffe29e}

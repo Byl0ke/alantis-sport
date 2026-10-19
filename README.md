@@ -87,3 +87,12 @@ Los recursos visuales de demostración proceden de la imagen de referencia facil
 6. Solo entonces activar el checkout desde `admin.html` y publicar `store-config.json`.
 
 Más información oficial: https://help.shopify.com/es/manual/checkout-settings/cart-permalink
+
+
+## Panel unificado con PIN (acceso visual)
+
+- Dirección del editor: `https://byl0ke.github.io/alantis-sport/admin.html`.
+- Muestra una pantalla para introducir el PIN de seis dígitos facilitado por el propietario. Una sesión desbloqueada dura hasta cerrar la pestaña o pulsar «Bloquear».
+- Todas las opciones están en la **misma página**: resumen, productos, inventario, cupones, banners, envíos, integración Shopify, copias de seguridad y publicación en GitHub.
+- **Advertencia de seguridad**: el PIN del navegador NO protege los archivos del servidor, ni el catálogo, ni el código público. En GitHub Pages no existe autenticación privada ni backend; el hash del PIN también está publicado y un atacante puede saltar esta comprobación. No almacenar secretos ni datos personales en esos archivos.
+- Para modificar o publicar el repositorio es obligatorio disponer de credenciales de GitHub con permisos. Para acceso privado real, implementar un servidor con autenticación y sesiones o utilizar el panel de Shopify, cuyo inicio de sesión ya está protegido.

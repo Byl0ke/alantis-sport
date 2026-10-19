@@ -11,10 +11,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="admin.css" />
+  <script src="admin-auth.js" defer></script>
   <script src="admin.js" defer></script>
 </head>
 <body>
-  <div class="shell">
+  <!-- Barrera visual del editor: en GitHub Pages NO equivale a una autenticación privada. -->
+  <section class="admin-gate" id="admin-gate" aria-labelledby="gate-title">
+    <div class="gate-glow" aria-hidden="true"></div>
+    <div class="gate-layout">
+      <div class="gate-brand">
+        <img src="assets/emblema.png" alt="Emblema dorado de ALANTIS SPORT" width="90" height="90" />
+        <div><span class="gate-eyebrow">ACCESO AL CENTRO DE CONTROL</span><h1 id="gate-title">ALANTIS <em>SPORT</em></h1><p>ADMINISTRACIÓN · ACCESO VISUAL CON PIN</p></div>
+      </div>
+      <div class="gate-card">
+        <div class="gate-lock" aria-hidden="true">♜</div>
+        <span class="eyebrow">PANEL DE ADMINISTRADORES</span>
+        <h2>Introduce tu PIN</h2>
+        <p>Accede a todos los controles de productos, ofertas, inventario, ventas y ajustes en una única página.</p>
+        <form id="pin-form" autocomplete="off">
+          <label for="admin-pin">PIN de 6 dígitos</label>
+          <div class="pin-entry"><input id="admin-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" minlength="6" required autocomplete="off" spellcheck="false" placeholder="••••••" aria-describedby="pin-help pin-message" /><button type="button" id="pin-visibility" aria-label="Mostrar PIN" aria-pressed="false">Mostrar</button></div>
+          <div class="pin-pad" aria-label="Teclado numérico">
+            <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
+            <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
+            <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
+            <button type="button" data-key="clear" aria-label="Borrar todo">C</button><button type="button" data-digit="0">0</button><button type="button" data-key="back" aria-label="Borrar última cifra">⌫</button>
+          </div>
+          <button type="submit" class="btn btn-gold gate-submit" id="pin-submit">ENTRAR AL PANEL <span aria-hidden="true">→</span></button>
+          <p id="pin-message" class="pin-message" role="status" aria-live="polite"></p>
+        </form>
+        <p id="pin-help" class="gate-disclaimer">Este PIN solo oculta el panel en el navegador. GitHub Pages es público y el PIN no protege los archivos ni los datos. Para publicar cambios sigue siendo necesario iniciar sesión con permisos de GitHub.</p>
+        <a href="./" class="gate-return">← Volver a la tienda</a>
+      </div>
+      <div class="gate-features"><span>✦ Productos</span><span>✦ Ofertas</span><span>✦ Inventario</span><span>✦ Shopify</span><span>✦ GitHub</span></div>
+    </div>
+  </section>
+  <div class="shell" id="admin-shell" hidden>
     <aside class="side" aria-label="Navegación del panel">
       <a class="brand" href="./" aria-label="Volver a ALANTIS SPORT"><img src="assets/emblema.png" alt="" /><span><strong>ALANTIS</strong><small>SPORT · ADMIN</small></span></a>
       <div class="side-label">PANEL DE CONTROL</div>
@@ -25,16 +57,25 @@
       <a class="side-link" href="#configuracion">⚙ <span>Configuración</span></a>
       <a class="side-link" href="#shopify-panel">◫ <span>Ventas Shopify</span></a>
       <a class="side-link" href="./" target="_blank" rel="noopener noreferrer">↗ <span>Ver tienda pública</span></a>
+      <button class="side-link logout-link" id="logout-side" type="button">⌁ <span>Bloquear panel</span></button>
       <a class="side-link" href="https://github.com/Byl0ke/alantis-sport" target="_blank" rel="noopener noreferrer">⌘ <span>Repositorio GitHub</span></a>
       <div class="side-help"><span class="help-spark">✦</span><strong>Control total del escaparate.</strong><p>Gestiona precios, ofertas, stock y contenido desde un mismo lugar. GitHub confirma cada publicación.</p></div>
       <div class="side-bottom">ALANTIS SPORT <span>v3.0 · Shopify preparado</span></div>
     </aside>
 
     <main class="workspace" id="resumen">
-      <header class="topbar"><div><span class="eyebrow">ALANTIS SPORT / ECOMMERCE</span><h1>Centro de <em>administración</em></h1><p>Gestiona productos, promociones, stock y aspecto de la tienda.</p></div><div class="top-actions"><a class="btn btn-light" href="./" target="_blank" rel="noopener noreferrer">↗ Ver tienda</a><button id="publish-top" class="btn btn-gold" type="button">↑ Publicar en GitHub</button></div></header>
+      <header class="topbar"><div><span class="eyebrow">ALANTIS SPORT / ECOMMERCE</span><h1>Centro de <em>administración</em></h1><p>Gestiona productos, promociones, stock y aspecto de la tienda.</p></div><div class="top-actions"><a class="btn btn-light" href="./" target="_blank" rel="noopener noreferrer">↗ Ver tienda</a><button id="publish-top" class="btn btn-gold" type="button">↑ Publicar en GitHub</button><button id="logout-top" class="btn btn-outline-gold" type="button">⌁ Bloquear</button></div></header>
 
-      <div class="notice" role="note"><span>ℹ</span><div><strong>Shopify conectado para preparar las ventas.</strong> La tienda Shopify sigue sin productos y en periodo de prueba. No existen ventas ni pedidos reales: las estadísticas son solo del catálogo y el stock no se descuenta automáticamente. Este panel es público, pero <strong>solo quien tenga autorización de escritura en GitHub</strong> puede publicar cambios. Nunca compartas tu token.</div></div>
+      <div class="notice" role="note"><span>ℹ</span><div><strong>Shopify conectado para preparar las ventas.</strong> La tienda Shopify sigue sin productos y en periodo de prueba. No existen ventas ni pedidos reales: las estadísticas son solo del catálogo y el stock no se descuenta automáticamente. El PIN es un filtro visual, <strong>no una autenticación segura</strong>. Solo quien tenga autorización de escritura en GitHub puede publicar cambios. Nunca compartas tu token.</div></div>
 
+      <nav class="admin-shortcuts" aria-label="Acceso rápido a todas las funciones">
+        <a href="#productos"><span>01 / TIENDA</span><strong>Productos</strong><small>Añadir, modificar y eliminar</small><b aria-hidden="true">↗</b></a>
+        <a href="#inventario"><span>02 / EXISTENCIAS</span><strong>Inventario</strong><small>Stock, avisos y acciones masivas</small><b aria-hidden="true">↗</b></a>
+        <a href="#descuentos"><span>03 / MARKETING</span><strong>Ofertas</strong><small>Cupones, rebajas y banners</small><b aria-hidden="true">↗</b></a>
+        <a href="#configuracion"><span>04 / AJUSTES</span><strong>Configuración</strong><small>Envíos y copias de seguridad</small><b aria-hidden="true">↗</b></a>
+        <a href="#shopify-panel"><span>05 / VENTAS</span><strong>Shopify</strong><small>Pagos, pedidos y clientes</small><b aria-hidden="true">↗</b></a>
+        <a href="#publish-heading"><span>06 / GUARDAR</span><strong>GitHub</strong><small>Publicar los cambios</small><b aria-hidden="true">↗</b></a>
+      </nav>
       <section class="summary-grid" aria-label="Resumen del catálogo">
         <div class="stat"><span>PRODUCTOS</span><strong id="stat-total">—</strong><small>En tu catálogo</small></div>
         <div class="stat"><span>VISIBLES</span><strong id="stat-visible">—</strong><small>En la tienda</small></div>

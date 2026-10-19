@@ -41,3 +41,12 @@ También puedes usar `Guardar borrador`, exportar CSV, descargar copias completa
 La sección **Shopify · Centro comercial** del panel de administración enlaza con el Shopify Admin autenticado para pedidos y clientes, sin revelar información privada en el repositorio. El checkout de este proyecto queda en modo demostración hasta que se habilite explícitamente y todos los artículos tengan IDs de variante reales.
 
 **Shopify conectado:** `psm7b6-qs.myshopify.com`. Debes elegir un plan de pago, crear productos reales, configurar impuestos, envíos, la pasarela de pago y completar las páginas legales antes de comenzar a vender. Los cupones del escaparate no se sincronizan con Shopify.
+
+
+## Panel unificado con PIN (acceso visual)
+
+- Dirección del editor: `https://byl0ke.github.io/alantis-sport/admin.html`.
+- Muestra una pantalla para introducir el PIN de seis dígitos facilitado por el propietario. Una sesión desbloqueada dura hasta cerrar la pestaña o pulsar «Bloquear».
+- Todas las opciones están en la **misma página**: resumen, productos, inventario, cupones, banners, envíos, integración Shopify, copias de seguridad y publicación en GitHub.
+- **Advertencia de seguridad**: el PIN del navegador NO protege los archivos del servidor, ni el catálogo, ni el código público. En GitHub Pages no existe autenticación privada ni backend; el hash del PIN también está publicado y un atacante puede saltar esta comprobación. No almacenar secretos ni datos personales en esos archivos.
+- Para modificar o publicar el repositorio es obligatorio disponer de credenciales de GitHub con permisos. Para acceso privado real, implementar un servidor con autenticación y sesiones o utilizar el panel de Shopify, cuyo inicio de sesión ya está protegido.
